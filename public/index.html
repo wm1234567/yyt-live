@@ -13,6 +13,16 @@
             })
             var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') || CSS.supports('top: constant(a)'))
             document.write('<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' + (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+            var mo=function(e){e.preventDefault();};
+            function stop(){
+                    document.body.style.overflow='hidden';        
+                    document.addEventListener("touchmove",mo,false);//禁止页面滑动
+            }
+            /***取消滑动限制***/
+            function move(){
+                    document.body.style.overflow='';//出现滚动条
+                    document.removeEventListener("touchmove",mo,false);        
+            }
         </script>
         <link rel="stylesheet" href="<%= BASE_URL %>static/index.css" />
     </head>
