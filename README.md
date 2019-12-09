@@ -2,17 +2,17 @@
 
 ## Project setup
 ```
-npm install
+安装依赖：npm install
 ```
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+运行编译：npm run serve 或 npm run dev:h5
 ```
 
 ### Compiles and minifies for production
 ```
-npm run build
+打包发布：npm run build
 ```
 
 ### Customize configuration
