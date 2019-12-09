@@ -60,7 +60,7 @@
 			}
 		},
 		onPullDownRefresh() {
-			console.log('onPullDownRefresh');
+			// console.log('onPullDownRefresh');
 			uni.stopPullDownRefresh();
 		},
 		onLoad() {
