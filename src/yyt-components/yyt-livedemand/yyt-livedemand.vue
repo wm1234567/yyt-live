@@ -5,7 +5,7 @@
             <view class="yyt-title-text">精品点播</view>
             <img class="yyt-title-right" src="static/right.png" />
         </view>
-        <view class="yyt-con">
+        <view class="yyt-con" v-if="livedemand">
             <view @click="liveDemandDetail(livedemand.course_id)">
                 <img class="yyt-stateIcon" src="static/zb.png" />
                 <view class="yyt-con-title">{{ livedemand.title }}</view>
@@ -24,6 +24,7 @@
                 </view>
             </view>
         </view>
+        <view class="null" v-else>暂无数据</view>
         <view class="space"></view>
     </view>
 </template>
@@ -66,14 +67,6 @@
                     if (res.data.code == 1001) {
                         this.livedemand = res.data.data;
                         // uni.stopPullDownRefresh();
-                    }
-                    if (res.data.code == 1002) {
-                        // uni.showToast({
-                        //     title: res.data.message,
-                        //     mask: false,
-                        //     duration: 2000,
-                        //     icon: "none"
-                        // });
                     }
                 },
             });

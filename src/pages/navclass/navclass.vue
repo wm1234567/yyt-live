@@ -134,7 +134,7 @@
             uni.getSystemInfo({
                 success: res => {
                     console.log(res.windowHeight);
-                    this._windowHeight = res.windowHeight - 98;
+                    this._windowHeight = res.windowHeight - 90;
                 }
             })
             this.store_id = STORE_ID;
@@ -157,6 +157,7 @@
                         store_id: this.store_id
                     },
                     success: res => {
+                        console.log('分类标题',res)
                         uni.hideLoading();
                         uni.stopPullDownRefresh();
                         if (res.data.code == 1001) {

@@ -2,9 +2,12 @@
     <view class="yyt-container">
         <view class="yyt-fillOrder-address-info" @click="addressList">
             <view class="info-name">{{ addressInfo.realname }}</view>
-            <view class="info-MA">
+            <view class="info-MA" v-if="addressInfo">
                 <view class="info-MA-mobile">{{ addressInfo.mobile }}</view>
                 <view class="info-MA-address">{{ addressInfo.address }}</view>
+            </view>
+             <view class="info-MA" v-else>
+                <view class="info-MA-add-address">添加收货地址</view>
             </view>
             <view class='yyt-icon_address'></view>
         </view>
@@ -36,8 +39,8 @@
             <view class="yyt-fillOrder-footer-allfee">应付
                 <text>￥{{ allPrice }}</text>
             </view>
-            <view class="yyt-fillOrder-footer-botton" @click="pay">
-                <view>去付款</view>
+            <view class="yyt-fillOrder-footer-botton">
+                 <button :loading="loadingFLg" :disabled="disabledFlg" @click="pay">结算</button>
             </view>
         </view>
     </view>
@@ -46,24 +49,24 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
     export default {
         data() {
             return {
-                shop_id: '',
-                num: '',
-                fillOrderInfo: {},
-                URL: '',
-                allPrice: '',
-                store_id: '',
-                type: '',
-                trolley_id: '',
-                addressInfo: {},
-                items: [],
-                shop_items: []
+                shop_id: '', //商品ID
+                num: '', //数量
+                fillOrderInfo: {},//商品信息
+                allPrice: '', //总价
+                store_id: '', //商户ID
+                type: '', // 类型区分 单商品还是购物车多商品
+                trolley_id: '', //购物车ID
+                addressInfo: {}, //地址
+                items: [], //购物车 提交信息
+                shop_items: [], //单商品提交信息
+                loadingFLg: false, 
+                disabledFlg: false,
             }
         },
 
@@ -85,7 +88,6 @@
             console.log(opt)
             this.allPrice = opt.allPrice;
             this.type = opt.type;
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             if (opt.shop_id && opt.num) {
                 this.shop_id = opt.shop_id;
@@ -156,6 +158,18 @@
             },
             // 下单
             pay() {
+                if(!this.addressInfo){
+                    uni.showToast({
+                        title: '请添加收货地址',
+                        mask: false,
+                        duration: 2000,
+                        icon: "none"
+                    });
+                    return;
+                }
+                this.disabledFlg = true;
+                this.loadingFLg = true;
+                
                 var openid = uni.getStorageSync('openid');
                 if (this.type == 1) {
                     let obj = {
@@ -200,6 +214,8 @@
                     },
                     success: res => {
                         console.log('订单提交', res)
+                        this.disabledFlg = false;
+                        this.loadingFLg = false;
                         if (res.data.code == 1001) {
                             var paystr = res.data.data.jsApiParameters;
                             // var pay = eval('(' + paystr + ')');
@@ -288,7 +304,13 @@
         height: 100rpx;
         float: left;
     }
-
+    .info-MA-add-address{
+        width: 80%;
+        height: 100rpx;
+        line-height: 100rpx;
+        color: #4986ff;
+        padding-left: 160rpx
+    }
     .info-MA-mobile {
         width: 100%;
         height: 40rpx;
@@ -441,7 +463,7 @@
         font-size: 30rpx;
     }
 
-    .yyt-fillOrder-footer-botton view {
+    .yyt-fillOrder-footer-botton button {
         width: 70%;
         height: 70rpx;
         margin: 0 auto;
@@ -451,5 +473,6 @@
         line-height: 75rpx;
         margin-top: 15rpx;
         border-radius: 40rpx;
+        font-size: 30rpx
     }
 </style>

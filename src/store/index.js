@@ -5,12 +5,19 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        sqCodeFlg: true
+        sqCode: false,
+        tel: true
     },
     mutations: {
-        sqOut(state){
-            state.sqCodeFlg = false;
-        }
+        getCode(state){
+            state.sqCode = true;
+        },
+        noTel(state){
+            state.tel = false;
+        },
+        yesTel(state){
+            state.tel = true;
+        },
     }
 })
 

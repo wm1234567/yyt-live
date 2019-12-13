@@ -5,7 +5,7 @@
             <view class="yyt-title-text">精品书籍</view>
             <img class="yyt-title-right" src="static/right.png" />
         </view>
-        <scroll-view scroll-x='false' style="width: 100%">
+        <scroll-view scroll-x='false' style="width: 100%" v-if="books">
             <view class="yyt-books" v-for="(item,index) in books" :key="index" @click="booksD(item.shop_id)">
                 <view class="yyt-books-img">
                     <img :src="item.shop_pic" lazy-load alt="" />
@@ -17,6 +17,7 @@
                 </view>
             </view>
         </scroll-view>
+         <view class="null" v-else>暂无数据</view>
     </view>
 </template>
 
@@ -55,14 +56,6 @@
                     if (res.data.code == 1001) {
                         this.books = res.data.data
                     }
-                    if (res.data.code == 1002) {
-                        uni.showToast({
-                            title: res.data.message,
-                            mask: false,
-                            duration: 2000,
-                            icon: "none"
-                        });
-                    }
                 },
             });
         },
@@ -82,5 +75,7 @@
     }
 </script>
 <style scoped>
-
+    /* scroll-view{
+       padding-right: 20rpx
+    } */
 </style>

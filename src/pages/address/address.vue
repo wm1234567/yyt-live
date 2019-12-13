@@ -298,7 +298,7 @@
     }
 
     .yyt-address-title {
-        width: 20%;
+        width: 25%;
         height: 70rpx;
         line-height: 70rpx;
         float: left;
@@ -306,7 +306,7 @@
     }
 
     .yyt-address-info {
-        width: 70%;
+        width: 65%;
         height: 70rpx;
         line-height: 70rpx;
         float: left;
@@ -345,7 +345,9 @@
     select:focus {
         outline: none;
     }
-
+    option{
+        background: #fff
+    }
     .yyt-exc-button {
         position: fixed;
         bottom: 0;

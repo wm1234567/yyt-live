@@ -116,7 +116,7 @@
 		width: 6rpx;
 		height: 30rpx;
 		position: absolute;
-		top: 31rpx;
+		top: 28rpx;
 		left: 0;
 	}
 
@@ -134,8 +134,9 @@
 		line-height: 90rpx;
 		float: left;
 		margin-left: 16rpx;
-		color: #333;
-		font-size: 29rpx;
+		color: #000;
+		font-size: 30rpx;
+		font-weight: bold
 	}
 
 	.yyt-list-title {
@@ -169,7 +170,7 @@
 	.user-view view {
 		width: 55%;
 		height: 60rpx;
-		line-height: 60rpx;
+		line-height: 32rpx;
 		float: left;
 		padding-left: 10rpx;
 		font-size: 22rpx;
@@ -238,11 +239,13 @@
 		height: auto;
 		background: #fff;
 		margin-bottom: 22rpx;
-		border: 1rpx solid #dedede;
 		border-radius: 25rpx;
 		position: relative;
 		padding: 66rpx 25rpx 25rpx 25rpx;
 		overflow: hidden;
+		-moz-box-shadow: 0px 1px 7px #dedede;
+		-webkit-box-shadow: 0px 1px 7px #dedede;
+		box-shadow: 0px 1px 10px #dedede;
 	}
 
 	.yyt-con-title {
@@ -320,11 +323,13 @@
 	.yyt-books {
 		width: 44%;
 		height: 550rpx;
-		border: 1rpx solid #dedede;
 		margin-left: 31rpx;
 		margin-bottom: 20rpx;
 		border-radius: 20rpx;
 		display: inline-block;
+		-moz-box-shadow: 0px 1px 7px #dedede;
+		-webkit-box-shadow: 0px 1px 7px #dedede;
+		box-shadow: 0px 1px 10px #dedede;
 	}
 
 	.yyt-books-img {
@@ -410,6 +415,13 @@
 		font-size: 29rpx
 	}
 
+	.yyt-rich-text {
+		width: 95%;
+		height: auto;
+		margin: 0 auto;
+		padding-top: 70rpx
+	}
+
 	rich-text img {
 		width: 100% !important;
 	}
@@ -477,6 +489,14 @@
 	/* 按钮颜色自定义 */
 	.vjs-icon-placeholder:before {
 		color: #fff
+	}
+
+	.null {
+		width: 100%;
+		height: 70rpx;
+		text-align: center;
+		line-height: 70rpx;
+		color: #666
 	}
 
 	/* .uni-video-video{

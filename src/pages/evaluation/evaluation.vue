@@ -105,7 +105,7 @@
             },
             // 交易打分
             onChange(e) {
-                this.level = e.value
+                this.level = e.value;
             },
             // 上传图片
             chooseImage(){

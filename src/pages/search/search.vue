@@ -52,7 +52,7 @@
         </view>
         <view class="yyt-null" v-if="list == ''">
             <view class="yyt-null-icon">
-                <img src="static/nodata.png" width="100%" alt="">
+                <img src="static/noSearch.png" width="100%" alt="">
             </view>
             <view class="yyt-null-text">暂无搜索内容</view>
         </view>

@@ -101,7 +101,7 @@
 </template>
 
 <script>
-    import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
+    import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
     import {
         requestUrl,
         IMGURL,

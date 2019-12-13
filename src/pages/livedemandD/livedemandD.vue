@@ -24,6 +24,18 @@
                         @canplay="onPlayerCanplay($event)" @play="onPlayerplay($event)">
                     </video-player>
                 </view>
+                <!-- 没有小课 -->
+                <view class="yyt-live" v-show="!liveclassD.list_paytype">
+                    <view class="yyt-live"
+                        :style="{backgroundImage: 'url(' + liveclassD.background + ')', backgroundSize:'cover', height:'400rpx'}">
+                        <view class="yyt-teacher-bg-zz"></view>
+                        <view class="yyt-live-button">
+                            <view class="yyt-live-button-pay">
+                                <view class="center-fee">暂无课程</view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
                 <!-- 已购买 -->
                 <view class="yyt-pay" v-show="liveclassD.pay_status == 2">
                     <view class="video-wrapper">
@@ -135,7 +147,9 @@
                                 <uni-collapse-item v-for="(item,index) in liveclassD.course_datum" :key="index"
                                     :title="item.title" :show-animation="true">
                                     <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index">
-                                        <view class='yyt-btn_H' @click="down(item.content)">{{ item.title }}</view>
+                                        <view class='yyt-btn_H'><a :href="item.content" target="_blank" :download="item.title"></a></view>
+                                        <view class='yyt-btn_H'><a :href="item.content" target="_blank">{{ item.title }}a</a> </view>
+                                        <!-- <view class='yyt-btn_H' @click="down(item.content)">{{ item.title }}</view> -->
                                         <!-- <img src="static/down.png" class="yyt-down" alt="" > -->
                                         <view class='yyt-icon_H'></view>
                                     </view>
@@ -367,7 +381,7 @@
             // 资料下载
             down(url) {
                 console.log(url)
-                window.location.href = IMGURL + url;
+                window.location.href = url;
             },
             // 小节播放
             minClass(paytype, demandUrl, pay_status, list_id) {
@@ -383,15 +397,15 @@
                         this.playerOptions.sources[0].src = demandUrl;
                         this.history(list_id);
                     }
-                } else { 
-                     if (list_id == this.liveclassD.list_id) {
+                } else {
+                    if (list_id == this.liveclassD.list_id) {
                         uni.showToast({
                             title: '播放中',
                             mask: false,
                             duration: 2000,
                             icon: "none"
                         });
-                    }else{
+                    } else {
                         this.liveclassD.list_paytype = 2;
                         this.playerOptions.sources[0].src = demandUrl;
                         this.history(list_id);
@@ -400,22 +414,23 @@
             },
             // 监听创建播放器
             onPlayerCanplay(player) {
-                console.log('player Canplay!', player)
-                var videoArr = document.getElementsByTagName("video")
-                videoArr[0].removeAttribute("x5-video-player-type");
-                videoArr[0].removeAttribute("x5-video-player-fullscreen");
-                videoArr[0].setAttribute("webkit-playsinline", "");
-                videoArr[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[0].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].setAttribute("x-webkit-airplay", "allow")
 
-                videoArr[1].removeAttribute("x5-video-player-type");
-                videoArr[1].removeAttribute("x5-video-player-fullscreen");
-                videoArr[1].setAttribute("webkit-playsinline", "");
-                videoArr[1].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[1].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[1].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[1].setAttribute("x-webkit-airplay", "allow")
 
-                videoArr[2].removeAttribute("x5-video-player-type");
-                videoArr[2].removeAttribute("x5-video-player-fullscreen");
-                videoArr[2].setAttribute("webkit-playsinline", "");
-                videoArr[2].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[2].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[2].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[2].setAttribute("x-webkit-airplay", "allow")
 
             },
             // 监听播放
@@ -428,7 +443,11 @@
                 if (list_id) {
                     var _list_id = list_id
                 } else {
-                    var _list_id = this.liveclassD.list_id
+                    if (this.liveclassD.list_id) {
+                        var _list_id = this.liveclassD.list_id;
+                    } else {
+                        var _list_id = ''
+                    }
                 }
                 requestUrl({
                     url: 'history',

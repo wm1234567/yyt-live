@@ -21,12 +21,11 @@
 		<!-- 分类导航 -->
 		<yyt-nav />
 		<!-- 直播课程 -->
-		<yyt-live-class />
+		<yyt-live-class v-show="!showFlg" />
 		<!-- 精品点播 -->
 		<yyt-live-demand />
 		<!-- 精品书籍 -->
 		<yyt-books />
-
 	</view>
 </template>
 
@@ -40,7 +39,8 @@
 	import {
 		requestUrl,
 		IMGURL,
-		STORE_ID
+		STORE_ID,
+		URL
 	} from '@/common/request.js'
 
 	export default {
@@ -56,7 +56,8 @@
 			return {
 				showFlg: false,
 				flg: true,
-				store_id: ''
+				store_id: '',
+				URL: ''
 			}
 		},
 		onPullDownRefresh() {
@@ -67,6 +68,7 @@
 			// var openid = 'oY_QVv32gzUl2FJe5hoYSpscEk-Y';
 			// uni.setStorageSync('openid', openid);
 			this.store_id = STORE_ID;
+			this.URL = URL;
 		},
 		onShow() {
 			/**
@@ -100,11 +102,15 @@
 							if (res.data.code == 1004) {
 								this.showFlg = true
 							} else {
-								this.showFlg = false
+								this.showFlg = false;
+								if (openid) {
+									this.login();
+								}
 							}
 						},
 					});
 				}
+				// 如果已经openid存在已经授权 再次请求是否绑定手机号
 			} else { //浏览器环境
 				console.log('浏览器')
 			}
@@ -112,16 +118,48 @@
 		created() {
 			// this.$store.commit('yescode')
 			// this.$store.commit('changecode',{code:'哈哈'})
-			// console.log(this.$store.state.code)
+			// console.log(this.$store.state.sqCode)
 		},
 		methods: {
 			setcode() {
+				window.location.href = this.URL
 				this.showFlg = false
-				window.location.href =
-					'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaf87a0b12aaeaaf8&redirect_uri=http%3a%2f%2fzb1.yueyat.net&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-
 			},
-
+			// 传值用户信息登录 并检测用户是否绑定手机号
+			login() {
+				var userInfo = uni.getStorageSync('userInfo');
+				requestUrl({
+					url: 'login',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						login_type: 1,
+						openid: userInfo.id,
+						nickname: userInfo.nickname,
+						avatar: userInfo.avatar,
+						store_id: this.store_id
+					},
+					success: res => {
+						console.log('是否绑定手机号', res)
+						if (res.data.code == 1003) { //1003 用户未绑定手机号码
+							// this.$store.commit('noTel')
+							uni.showModal({
+								content: '请绑定您的手机号',
+								showCancel: false,
+								success: function (res) {
+									if (res.confirm) {
+										uni.navigateTo({ //去绑定手机号码
+											url: '/pages/bindMobile/bindMobile'
+										});
+									} else if (res.cancel) {}
+								}
+							});
+						}
+					},
+				});
+			},
 		}
 	}
 </script>

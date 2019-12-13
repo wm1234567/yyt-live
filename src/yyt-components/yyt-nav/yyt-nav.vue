@@ -48,14 +48,6 @@
                     if (res.data.code == 1001) {
                         this.navlist = res.data.data
                     }
-                    if (res.data.code == 1002) {
-                        uni.showToast({
-                            title: res.data.message,
-                            mask: false,
-                            duration: 2000,
-                            icon: "none"
-                        });
-                    }
                 },
             });
         },

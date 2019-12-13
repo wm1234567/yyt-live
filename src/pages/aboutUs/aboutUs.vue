@@ -1,6 +1,8 @@
 <template>
     <view class="yyt-container">
-        <rich-text :nodes="about"></rich-text>
+        <view class="yyt-rich-text">
+            <rich-text :nodes="about"></rich-text>
+        </view>
     </view>
 </template>
 
@@ -22,7 +24,6 @@
         onPullDownRefresh() {
             this.load();
         },
-
 
         //初始加载
         onLoad(opt) {

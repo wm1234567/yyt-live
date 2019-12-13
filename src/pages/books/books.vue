@@ -11,6 +11,12 @@
                 <view class="yyt-books-bottom-money">￥{{ item.price }}</view>
             </view>
         </view>
+        <view class="yyt-null" v-if="books.length == 0">
+            <view class="yyt-null-icon">
+                <img src="static/nodata.png" width="100%" alt="">
+            </view>
+            <view class="yyt-null-text">暂无数据</view>
+        </view>
         <view class="yyt-car-icon" @click="car">
             <img src="static/carIcon.png" />
         </view>
@@ -56,14 +62,6 @@
                         if (res.data.code == 1001) {
                             this.books = res.data.data;
                             uni.stopPullDownRefresh();
-                        }
-                        if (res.data.code == 1002) {
-                            uni.showToast({
-                                title: res.data.message,
-                                mask: false,
-                                duration: 2000,
-                                icon: "none"
-                            });
                         }
                     },
                 });

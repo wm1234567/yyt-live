@@ -3,7 +3,7 @@
         <form @submit="formSubmit">
             <view class="uni-textarea"><textarea placeholder-style="color:#666" placeholder="意见反馈" name="content" /></view>
             <view class="yyt-submit">
-				<button form-type="submit" :loading="loadingFLg" :disabled="disabledFlg">发表</button>
+				<button form-type="submit" :loading="loadingFLg" :disabled="disabledFlg">反馈</button>
 			</view>
         </form>
     </view>
@@ -35,7 +35,7 @@
                 var openid = uni.getStorageSync('openid');
                 if(e.detail.value.content == ''){
                     uni.showToast({
-                        title: '请填写',
+                        title: '请填写您的反馈意见',
                         mask: false,
                         duration: 2000,
                         icon: "none"
@@ -57,8 +57,8 @@
                     },
                     success: res => {
                         console.log('success', res)
-                        this.disabledFlg = true;
-                        this.loadingFLg = true;
+                        this.disabledFlg = false;
+                        this.loadingFLg = false;
                         if (res.data.code == 1001) {
                             uni.showToast({
                                 title: '提交成功',

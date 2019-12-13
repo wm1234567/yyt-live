@@ -11,7 +11,7 @@
 				<view class="yyt-center-user-name">{{ user.nickname }}</view>
 			</view>
 			<view class="yyt-center-nav">
-				<view class="yyt-center-nav-center shadow-warp">
+				<view class="yyt-center-nav-center">
 					<view class="navs" @click="colectCourse">
 						<view class="navs-num">{{ info.collect_list }}</view>
 						<view>收藏课程</view>
@@ -29,6 +29,7 @@
 		</view>
 		<view class="yyt-center-r">
 			<view class='yyt-vipPay_H' @click="history">
+				<img src="static/1.png" alt="">
 				<view class='yyt-btn_H'>观看历史</view>
 				<view class='yyt-icon_H'></view>
 			</view>
@@ -43,31 +44,36 @@
 		<view class="space"></view>
 		<view class="yyt-center-r">
 			<view class='yyt-vipPay_H yyt-bottom-border' @click="order">
+				<img src="static/2.png" alt="">
 				<view class='yyt-btn_H'>我的订单</view>
 				<view class='yyt-icon_H'></view>
 			</view>
 			<view class='yyt-vipPay_H yyt-bottom-border' @click="addressList">
+				<img src="static/3.png" alt="">
 				<view class='yyt-btn_H'>收货地址</view>
 				<view class='yyt-icon_H'></view>
 			</view>
 			<view class='yyt-vipPay_H' @click="car">
+				<img src="static/4.png" alt="">
 				<view class='yyt-btn_H'>购物车</view>
 				<view class='yyt-icon_H'></view>
 			</view>
 		</view>
 		<view class="space"></view>
 		<view class="yyt-center-r">
-			<view class='yyt-vipPay_H yyt-bottom-border'>
+			<!-- <view class='yyt-vipPay_H yyt-bottom-border'>
 				<a href="tel:15611686162">
 					<view class='yyt-btn_H'>在线客服</view>
 					<view class='yyt-icon_H'></view>
 				</a>
-			</view>
+			</view> -->
 			<view class='yyt-vipPay_H yyt-bottom-border' @click="message">
+				<img src="static/6.png" alt="">
 				<view class='yyt-btn_H'>意见反馈</view>
 				<view class='yyt-icon_H'></view>
 			</view>
 			<view class='yyt-vipPay_H' @click="aboutUs">
+				<img src="static/7.png" alt="">
 				<view class='yyt-btn_H'>关于我们</view>
 				<view class='yyt-icon_H'></view>
 			</view>
@@ -110,7 +116,7 @@
 		},
 		methods: {
 			load() {
-				 var openid = uni.getStorageSync('openid');
+				var openid = uni.getStorageSync('openid');
 				requestUrl({
 					url: 'user_info',
 					header: {
@@ -178,12 +184,12 @@
 					url: '/pages/car/car'
 				})
 			},
-			aboutUs(){
+			aboutUs() {
 				uni.navigateTo({
 					url: '/pages/aboutUs/aboutUs'
 				})
 			},
-			message(){
+			message() {
 				uni.navigateTo({
 					url: '/pages/message/message'
 				})
@@ -276,8 +282,9 @@
 		border-radius: 10rpx;
 		border: 1rpx solid #ebebeb;
 		background: #fff;
-		box-shadow: 0px 23px 40px -30px #ebebeb;
-		-webkit-box-shadow: 0px 23px 40px -30px #ebebeb;
+		-moz-box-shadow: 0px 1px 7px #dedede;
+		-webkit-box-shadow: 0px 1px 7px #dedede;
+		box-shadow: 0px 1px 10px #dedede;
 	}
 
 	.navs {
@@ -348,6 +355,14 @@
 		position: relative;
 	}
 
+	.yyt-vipPay_H img {
+		position: absolute;
+		top: 31rpx;
+		left: 10rpx;
+		width: 35rpx;
+		height: 35rpx;
+	}
+
 	.yyt-icon_H {
 		position: absolute;
 		top: 40rpx;
@@ -361,10 +376,11 @@
 
 
 	.yyt-btn_H {
+		width: 50%;
+		height: 95rpx;
 		color: #000;
 		float: left;
-		margin-right: 30rpx;
-		width: 100%;
+		margin-left: 54rpx;
 		line-height: 95rpx;
 		font-size: 28rpx;
 	}

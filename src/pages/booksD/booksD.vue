@@ -29,12 +29,12 @@
             <view class="yyt-book-info-num">已售：{{ booksD.pay_num }}本</view>
         </view>
         <view class="space"></view>
-         <view class="yyt-book-info">
+        <view class="yyt-book-info">
             <rich-text :nodes="booksD.content"></rich-text>
-         </view>
+        </view>
         <view class="yyt-book-bottom">
             <view class="yyt-book-bottom-left">
-                <view class="bottom-block">
+                <view class="bottom-block" @click="contact">
                     <view class="bottom-block-icon">
                         <img src="static/b-user.png" />
                     </view>
@@ -214,12 +214,24 @@
                 uni.navigateTo({
                     url: '/pages/car/car'
                 })
+            },
+            contact() {
+                uni.showToast({
+                    title: '暂未开放',
+                    mask: false,
+                    duration: 2000,
+                    icon: "none"
+                });
             }
         }
     }
 </script>
 
 <style scoped>
+    .swiper {
+        height: 350rpx;
+    }
+
     .yyt-exc {
         background: #fff;
         padding: 20rpx
@@ -317,6 +329,7 @@
         width: 100%;
         height: 100rpx;
         border-top: 1rpx solid #f4f4f4;
+        background: #fff
     }
 
     .yyt-book-bottom-left {

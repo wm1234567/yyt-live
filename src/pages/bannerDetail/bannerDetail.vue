@@ -46,14 +46,6 @@
                     if (res.data.code == 1001) {
                         this.bannerD = res.data.data
                     }
-                    if (res.data.code == 1002) {
-                        uni.showToast({
-                            title: res.data.message,
-                            mask: false,
-                            duration: 2000,
-                            icon: "none"
-                        });
-                    }
                 },
             });
         },
@@ -67,6 +59,9 @@
 </script>
 <style scoped>
     .yyt-text {
-        width: 100%
+        width: 95%;
+        height: auto;
+        margin: 0 auto;
+        padding-top: 70rpx
     }
 </style>

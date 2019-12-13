@@ -16,11 +16,23 @@
                     </view>
                 </view>
                 <!-- 未购买 当前小课免费 -->
-                <view class="video-wrapper" v-show="liveclassD.list_paytype == 2">
+                <view class="video-wrapper" v-show="liveclassD.pay_status == 1 && liveclassD.list_paytype == 2">
                     <video-player class="vjs-custom-skin" ref="videoPlayer" webkit-playsinline playsinline
                         x-webkit-airplay="allow" x5-playsinline="true" :options="playerOptions"
                         @canplay="onPlayerCanplay($event)" @play="onPlayerplay($event)">
                     </video-player>
+                </view>
+                <!-- 没有小课 -->
+                <view class="yyt-live" v-show="!liveclassD.list_paytype">
+                    <view class="yyt-live"
+                        :style="{backgroundImage: 'url(' + liveclassD.background + ')', backgroundSize:'cover', height:'400rpx'}">
+                        <view class="yyt-teacher-bg-zz"></view>
+                        <view class="yyt-live-button">
+                            <view class="yyt-live-button-pay">
+                                <view class="center-fee">暂无课程</view>
+                            </view>
+                        </view>
+                    </view>
                 </view>
                 <!-- 已购买 -->
                 <view class="yyt-pay" v-show="liveclassD.pay_status == 2">
@@ -68,18 +80,6 @@
             <view class="yyt-live-state_1" v-show="liveclassD.live_status == 3">已结束</view>
             <view class="yyt-live-state" v-show="liveclassD.live_status == 4">回放中</view>
         </view>
-        <!-- 点播 -->
-        <!-- <view class="yyt-live" v-if="liveclassD.type == 2">
-            <view class="video-wrapper">
-                <view class="video-wrapper">
-                    <video id="myVideo" controls autoplay  webkit-playsinline playsinline x-webkit-airplay="allow"
-                                    x5-playsinline="true"
-                        src="https://img.cdn.aliyun.dcloud.net.cn/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-                        controls poster="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/poster.png"></video>
-                </view>
-                <view class="yyt-live-state">回放中</view>
-            </view>
-        </view> -->
         <!-- 选项卡 -->
         <scroll-view class="yyt-scroll" scroll-x='false' style="width: 100%">
             <view class="navli" v-for="(item,index) in navList" :key="index" :class="{'activeT':nowIndex === index}"
@@ -126,8 +126,7 @@
                             <uni-collapse :accordion="true">
                                 <uni-collapse-item v-for="(item,index) in liveclassD.course_list" :key="index"
                                     :title="item.title" :show-animation="true">
-                                    <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index"
-                                        @click='navitem'>
+                                    <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index">
                                         <view class='yyt-btn_H'
                                             @click="minClass(item.paytype, item.live_status, item.viderUrl, liveclassD.pay_status,item.list_id)">
                                             <!-- 付费 -->
@@ -210,8 +209,7 @@
                             <uni-collapse :accordion="true">
                                 <uni-collapse-item v-for="(item,index) in liveclassD.course_datum" :key="index"
                                     :title="item.title" :show-animation="true">
-                                    <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index"
-                                        @click='navitem'>
+                                    <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index">
                                         <view class='yyt-btn_H' @click="down(item.content)">{{ item.title }}</view>
                                         <!-- <img src="static/down.png" class="yyt-down" alt="" > -->
                                         <view class='yyt-icon_H'></view>
@@ -323,7 +321,7 @@
             // 获取body 可视区域高度
             var clientHeight = document.body.clientHeight
             console.log(clientHeight)
-            this._windowHeight = clientHeight - 260
+            this._windowHeight = clientHeight - 300
             this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.course_id = opt.course_id;
@@ -450,7 +448,7 @@
             // 资料下载
             down(url) {
                 console.log(url)
-                window.location.href = IMGURL + url;
+                window.location.href = url;
             },
             // 小节播放
             minClass(paytype, live_status, viderUrl, pay_status, list_id) {
@@ -489,7 +487,7 @@
                         }
                         if (live_status == 4) {
                             this.liveclassD.live_status = live_status;
-                            this.playerOptions.sources[0].type = 'video/mp4';
+                            this.playerOptions.sources[0].type = 'application/x-mpegURL';
                             this.playerOptions.sources[0].src = viderUrl;
                             this.history(list_id);
                             this.is_id = list_id
@@ -514,6 +512,7 @@
                     }
                     if (live_status == 2 && list_id != this.liveclassD.list_id) {
                         this.liveclassD.list_paytype = 2;
+                        this.playerOptions.sources[0].type = 'video/mp4';
                         this.playerOptions.sources[0].src = viderUrl;
                     }
                     if (live_status == 4 && list_id != this.liveclassD.list_id) {
@@ -535,22 +534,23 @@
             },
             // 监听创建播放器
             onPlayerCanplay(player) {
-                console.log('player Canplay!', player)
-                var videoArr = document.getElementsByTagName("video")
-                videoArr[0].removeAttribute("x5-video-player-type");
-                videoArr[0].removeAttribute("x5-video-player-fullscreen");
-                videoArr[0].setAttribute("webkit-playsinline", "");
-                videoArr[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[0].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].setAttribute("x-webkit-airplay", "allow")
 
-                videoArr[1].removeAttribute("x5-video-player-type");
-                videoArr[1].removeAttribute("x5-video-player-fullscreen");
-                videoArr[1].setAttribute("webkit-playsinline", "");
-                videoArr[1].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[1].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[1].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[1].setAttribute("x-webkit-airplay", "allow")
 
-                videoArr[2].removeAttribute("x5-video-player-type");
-                videoArr[2].removeAttribute("x5-video-player-fullscreen");
-                videoArr[2].setAttribute("webkit-playsinline", "");
-                videoArr[2].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[2].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[2].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[2].setAttribute("x-webkit-airplay", "allow")
 
             },
             // 监听播放
@@ -563,7 +563,11 @@
                 if (list_id) {
                     var _list_id = list_id
                 } else {
-                    var _list_id = this.liveclassD.list_id
+                    if (this.liveclassD.list_id) {
+                        var _list_id = this.liveclassD.list_id;
+                    } else {
+                        var _list_id = ''
+                    }
                 }
                 requestUrl({
                     url: 'history',

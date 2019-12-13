@@ -22,9 +22,10 @@
 				<input class="yyt-code" name="pass" placeholder="" />
 			</view> -->
 			<view class="yyt-submit">
-				<button form-type="submit">确定</button>
+				<button form-type="submit" :loading="loadingFLg" :disabled="disabledFlg">确定</button>
 			</view>
 		</form>
+		<view class="yyt-toast">提示：请务必绑定您的手机号，以便创建您的个人信息</view>
 	</view>
 </template>
 
@@ -39,7 +40,9 @@
 				show: true,
 				count: '',
 				timer: null,
-				store_id: ''
+				store_id: '',
+				loadingFLg: false,
+				disabledFlg: false,
 			}
 		},
 		onLoad() {
@@ -68,9 +71,8 @@
 					});
 					return;
 				}
-				uni.showLoading({
-					title: '提交中',
-				});
+				this.disabledFlg = true;
+				this.loadingFLg = true;
 				requestUrl({
 					url: 'mobile',
 					header: {
@@ -85,20 +87,21 @@
 					},
 					success: res => {
 						console.log('success', res)
+						this.disabledFlg = false;
+						this.loadingFLg = false;
 						if (res.data.code == 1001) {
-							uni.hideLoading();
 							uni.showToast({
 								title: res.data.message,
 								mask: false,
 								duration: 2000,
 								icon: "none"
 							});
+							// this.$store.commit('yesTel')
 							setTimeout(() => {
 								uni.navigateBack({})
 							}, 1000)
 						}
 						if (res.data.code == 1002) {
-							uni.hideLoading();
 							uni.showToast({
 								title: res.data.message,
 								mask: false,
@@ -214,5 +217,14 @@
 
 	button::after {
 		border: none;
+	}
+
+	.yyt-toast {
+		width: 100%;
+		height: 60rpx;
+		text-align: center;
+		color: #fb4f6c;
+		margin-top: 40rpx;
+		font-size: 28rpx
 	}
 </style>

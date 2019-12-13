@@ -9,7 +9,7 @@
                         <img class="yyt-cart-pro-select" src='static/cartSelect.png' v-show="item.selected"
                             @click="selectList(index)" />
                         <!-- 未选中 -->
-                        <img class="yyt-cart-pro" src='static/cart.png' @click="selectList(index)" />
+                        <img class="yyt-cart-pro" src='static/cart.png' @click="selectList(index)" v-show="!item.selected"/>
                     </view>
                     <!-- 列表 -->
                     <view class='yyt-conCar'>
@@ -55,9 +55,10 @@
         </view>
         <view class="yyt-null" v-if="carts.length == 0">
             <view class="yyt-null-icon">
-                <img src="static/nodata.png" width="100%" alt="">
+                <img src="static/noCar.png" width="100%" alt="">
             </view>
-            <view class="yyt-null-text">购物车是空的哦</view>
+            <view class="yyt-null-text">您的购物车中没有商品哦</view>
+            <view class="yyt-null-go" @click="goBooks">去商城逛逛吧</view>
         </view>
     </view>
 
@@ -350,6 +351,11 @@
                     url: '/pages/fillOrder/fillOrder?trolley_id=' + trolley_id +
                         '&allPrice=' + this.totalPrice + '&type=' + 2
                 })
+            },
+            goBooks(){
+                 uni.switchTab({
+                    url: '/pages/books/books'
+                })
             }
 
         }
@@ -382,20 +388,22 @@
     }
 
     .yyt-cart-pro {
-        position: absolute;
+        /* position: absolute;
         left: 44rpx;
-        top: 135rpx;
+        top: 135rpx; */
         width: 44rpx;
         height: 44rpx;
+        margin-top: 66rpx
     }
 
     .yyt-cart-pro-select {
-        position: absolute;
+        /* position: absolute;
         left: 44rpx;
-        top: 135rpx;
+        top: 135rpx; */
         width: 45rpx;
         height: 45rpx;
         z-index: 1;
+        margin-top: 66rpx
     }
 
     .yyt-cart-thumb {
@@ -596,5 +604,18 @@
         color: #fff;
         text-align: center;
         line-height: 90rpx;
+    }
+    .yyt-null-go{
+        width: 230rpx;
+        height: 56rpx;
+        margin: 0 auto;
+        margin-top: 20rpx;
+        line-height: 56rpx;
+        text-align: center;
+        background: #ffffff;
+        color: #4a86ff;
+        border: 1rpx solid #4a86ff;
+        font-size: 27rpx;
+        border-radius: 28rpx;
     }
 </style>

@@ -1,47 +1,52 @@
 <template>
     <view class="yyt-container">
         <view class="space"></view>
-        <view class="yyt-list" v-if="openid != ''">
+        <view class="yyt-list">
             <view class="yyt-title" @click="liveclass_">
                 <img class="yyt-title-icon" src="static/titIcon.png" />
                 <view class="yyt-title-text">直播课程</view>
                 <img class="yyt-title-right" src="static/right.png" />
             </view>
-            <view class="yyt-live">
-                <view class="yyt-live"
-                    :style="{backgroundImage: 'url(' + liveclass.background + ')', backgroundSize:'cover', height:'400rpx'}"
-                    v-show="liveclass.live_status == 1 || liveclass.live_status == 3">
-                    <view class="yyt-teacher-bg-zz"></view>
-                    <view class="yyt-live-button">
-                        <view class="yyt-live-button-center">
-                            <img src="static/play.png" />
+
+            <view class="yyt-live" v-if="liveclass">
+                <view class="yyt-live">
+                    <view class="yyt-live"
+                        :style="{backgroundImage: 'url(' + liveclass.background + ')', backgroundSize:'cover', height:'400rpx'}"
+                        v-show="liveclass.live_status == 1 || liveclass.live_status == 3">
+                        <view class="yyt-teacher-bg-zz"></view>
+                        <view class="yyt-live-button">
+                            <view class="yyt-live-button-center">
+                                <img src="static/play.png" />
+                            </view>
                         </view>
                     </view>
+                    <view class="video-wrapper" v-show="liveclass.live_status == 2 || liveclass.live_status == 4">
+                        <video-player class="vjs-custom-skin" ref="videoPlayer" ebkit-playsinline="" playsinline=""
+                            x-webkit-airplay="allow" x5-playsinline="true" :options="playerOptions"
+                            @canplay="onPlayerCanplay($event)">
+                        </video-player>
+                    </view>
+                    <view class="yyt-live-state_1" v-show="liveclass.live_status == 1">未开播
+                    </view>
+                    <view class="yyt-live-state" v-show="liveclass.live_status == 2">直播中
+                    </view>
+                    <view class="yyt-live-state_1" v-show="liveclass.live_status == 3">已结束
+                    </view>
+                    <view class="yyt-live-state" v-show="liveclass.live_status == 4">回放中
+                    </view>
                 </view>
-                <view class="video-wrapper" v-show="liveclass.live_status == 2 || liveclass.live_status == 4">
-                    <video-player class="vjs-custom-skin" ref="videoPlayer" ebkit-playsinline="" playsinline=""
-                        x-webkit-airplay="allow" x5-playsinline="true" :options="playerOptions"
-                        @canplay="onPlayerCanplay($event)">
-                    </video-player>
-                </view>
-                <view class="yyt-live-state_1" v-show="liveclass.live_status == 1">未开播
-                </view>
-                <view class="yyt-live-state" v-show="liveclass.live_status == 2">直播中
-                </view>
-                <view class="yyt-live-state_1" v-show="liveclass.live_status == 3">已结束
-                </view>
-                <view class="yyt-live-state" v-show="liveclass.live_status == 4">回放中
+                <view class="yyt-list-title">{{ liveclass.title }}</view>
+                <view class="yyt-list-user">
+                    <view class="user-view" v-for="(item, index) in liveclass.anchor_id" :key="index"
+                        @click="teacher(item.anchor_id)">
+                        <img :src="item.avatar" lazy-load alt="" />
+                        <view>{{ item.realname }}</view>
+                    </view>
                 </view>
             </view>
-            <view class="yyt-list-title">{{ liveclass.title }}</view>
-            <view class="yyt-list-user">
-                <view class="user-view" v-for="(item, index) in liveclass.anchor_id" :key="index"
-                    @click="teacher(item.anchor_id)">
-                    <img :src="item.avatar" lazy-load alt="" />
-                    <view>{{ item.realname }}</view>
-                </view>
-            </view>
+            <view class="null" v-else>暂无数据</view>
         </view>
+        <view class="space"></view>
     </view>
 </template>
 
@@ -61,7 +66,6 @@
         name: 'YytBanner',
         data() {
             return {
-                openid:'',
                 URL: '', //图片前缀
                 liveclass: {},
                 playerOptions: {
@@ -91,7 +95,6 @@
             }
         },
         created() {
-            this.openid = uni.getStorageSync('openid');
             uni.showLoading({
                 title: '加载中',
             });
@@ -116,14 +119,6 @@
                         } else {
                             this.playerOptions.sources[0].src = res.data.data.playUrl;
                         }
-                    }
-                    if (res.data.code == 1002) {
-                        uni.showToast({
-                            title: res.data.message,
-                            mask: false,
-                            duration: 2000,
-                            icon: "none"
-                        });
                     }
                 },
             });

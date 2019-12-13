@@ -40,14 +40,20 @@
                 serverMsg: [], //聊天列表
                 MsgObj: {}, //个人聊天信息
                 scrollTop: 0,
-                mitemHeight: 0
+                mitemHeight: 0,
+                destroyedFlg: false,
             }
         },
         mounted() {
             // 初始化
             var userInfo = uni.getStorageSync('userInfo');
             var openid = uni.getStorageSync('openid');
-            this.path = "wss://yytzb.yueyat.net:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
+
+            // 开发版
+            // this.path = "wss://yytzb.yueyat.net:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
+            //     1 + "&type=" + 2
+            // 使用版
+             this.path = "wss://zb.yueyat.vip:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
                 1 + "&type=" + 2
             this.init()
         },
@@ -122,10 +128,16 @@
                 this.socket.send(e.target.value.msg); //向服务端发送内容
                 this.valMsg = ''; //清空input值
             },
-            close: function (e) {
-                console.log("socket已经关闭")
-            },
 
+            close: function (e) {
+                console.log("socket已经关闭",this.destroyedFlg);
+                if(!this.destroyedFlg){
+                   setTimeout(()=>{
+                        this.init()
+                   },10000) 
+                }
+            },
+          
             //实时滚动 
             goTop() {
                 let that = this;
@@ -155,6 +167,7 @@
         destroyed() {
             // 销毁监听
             this.socket.close();
+            this.destroyedFlg = true;
         }
     }
 </script>

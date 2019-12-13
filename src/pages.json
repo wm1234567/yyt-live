@@ -287,7 +287,9 @@
 			"navigationBarTitleText": "关于我们",
 			"enablePullDownRefresh": false,
 			"app-plus": {
-				
+				"titleNView": {
+					"type": "transparent"
+				}
 			}
 		}
 	}, {
@@ -302,9 +304,9 @@
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "月牙堂直播系统",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "直播系统",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff"
 	},
 	"tabBar": {
 		"color": "#7A7E83",

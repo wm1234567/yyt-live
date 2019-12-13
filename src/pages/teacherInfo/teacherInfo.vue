@@ -89,14 +89,14 @@
     .yyt-teacher-avatar {
         position: absolute;
         left: 0;
-        bottom: 142rpx;
+        bottom: 120rpx;
         width: 100%;
-        height: 120rpx;
+        height: 150rpx;
     }
 
     .avatar-center {
-        width: 120rpx;
-        height: 120rpx;
+        width: 150rpx;
+        height: 150rpx;
         margin: 0 auto;
     }
 

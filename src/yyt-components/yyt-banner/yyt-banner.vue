@@ -54,14 +54,6 @@
                     if (res.data.code == 1001) {
                         this.banner = res.data.data
                     }
-                    if (res.data.code == 1002) {
-                        uni.showToast({
-                            title: res.data.message,
-                            mask: false,
-                            duration: 2000,
-                            icon: "none"
-                        });
-                    }
                 },
             });
         },
@@ -71,6 +63,9 @@
                     uni.navigateTo({
                         url: '/pages/bannerDetail/bannerDetail?banner_id=' + id + '&type=' + type
                     })
+                }
+                if(type == 2){
+                    window.location.href = content;
                 }
                 if (type == 3) {
                     uni.navigateTo({

@@ -1,10 +1,12 @@
 <template>
     <view class="yyt-container">
         <form @submit="formSubmit">
-            <view class="uni-textarea"><textarea placeholder-style="color:#666" placeholder="请填写你的退款理由" name="content" /></view>
+            <view class="uni-textarea"><textarea placeholder-style="color:#666" placeholder="请填写你的退款理由"
+                    name="content" /></view>
             <view class="yyt-upload-img" @tap="chooseImage">
             <view class="yyt-imglist" v-for="(item, index) in imgArr" :key="index" >
-                <img :src="item" alt="">
+                <img class="yyt-delimg" src="static/del.png" alt="" @click="delImg(index)">
+                <img class="yyt-img" :src="item" alt="">
             </view> 
             <img class="upload-img" src="static/upload.png" alt="">
             </view>
@@ -44,9 +46,13 @@
             this.items_id = opt.items_id
         },
         methods: {
+            // 发起表单提交事件
             formSubmit(e){
+                var that = this
+                var _imgArr = []
                 var openid = uni.getStorageSync('openid');
-                if(e.detail.value.content == ''){
+                var content = e.detail.value.content
+                if(content == ''){
                     uni.showToast({
                         title: '请填写',
                         mask: false,
@@ -57,6 +63,34 @@
                 }
                 this.disabledFlg = true;
                 this.loadingFLg = true;
+                for(let i in this.imgArr){
+                    uni.uploadFile({
+                        url : 'https://yytzb.yueyat.net/api/upload_img',
+                        filePath: this.imgArr[i],
+                        name: 'file',
+                        success: function (res) {
+                            var imgStr = JSON.parse(res.data)
+                            if (imgStr.code == 1001) {
+                                _imgArr.push(imgStr.data)
+                                console.log(_imgArr)
+                                if (_imgArr.length == that.imgArr.length) {
+                                    that.formData(content, _imgArr)
+                                }
+                            }else{
+                                uni.showToast({
+                                    title: '图片上传失败',
+                                    mask: false,
+                                    duration: 2000,
+                                    icon: "none"
+                                });
+                            }
+                        }
+                    });
+                }
+            },
+            // 提交提交
+            formData(content, _imgArr){
+                var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'shop_order_refund',
                     header: {
@@ -67,8 +101,8 @@
                         account: openid,
                         store_id: this.store_id,
                         refund_type: 1,
-                        refuse: e.detail.value.content,
-                        discuss_pic: 1,
+                        refuse: content,
+                        discuss_pic: _imgArr,
                         items_id: this.items_id,
                         order_id: this.order_id
                     },
@@ -96,12 +130,11 @@
                         }
                     },
                 });
-
             },
- 
             // 上传图片
             chooseImage(){
                 var that = this
+                var _imgArr = []
                 uni.chooseImage({
                     count: 9, //默认9
                     sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
@@ -110,9 +143,16 @@
                         console.log(res.tempFilePaths)
                         that.imgArr = res.tempFilePaths
                         console.log(that.imgArr)
+                         
                     }
-                 })
+                 }) 
             },
+            // 删除照片
+            delImg(index){
+                var picArr = this.imgArr;
+                picArr.splice(index, 1);
+                this.imgArr = picArr;
+            }
         }
     }
 
@@ -145,18 +185,33 @@
         padding: 10rpx;
         overflow: hidden;
     }
-    .yyt-imglist img{
-        width: 100rpx;
-        height: 100rpx;
+    .yyt-imglist{
+        position: relative;
+        width: 130rpx;
+        height: 130rpx;
+        overflow: hidden;
         float: left;
         margin-right: 10rpx
     }
+    .yyt-delimg{
+        position: absolute;
+        top: 0rpx;
+        right: 0rpx;
+        width: 35rpx;
+        height: 35rpx;
+        z-index: 1
+    }
+    .yyt-img{
+        width: 110rpx;
+        height: 110rpx;
+        float: left;
+    }
     .upload-img{
-        width: 100rpx;
-        height: 100rpx;
+        width: 110rpx;
+        height: 110rpx;
         float: left; 
     }
-    	.yyt-submit {
+    .yyt-submit {
 		width: 95%;
 		height: 80rpx;
 		margin: 0 auto;

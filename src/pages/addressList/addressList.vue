@@ -19,7 +19,7 @@
             <view class="yyt-null-icon">
                 <img src="static/nodata.png" width="100%" alt="">
             </view>
-            <view class="yyt-null-text">暂无收货地址</view>
+            <view class="yyt-null-text">您还没有收货地址哦</view>
         </view>
     </view>
 </template>
