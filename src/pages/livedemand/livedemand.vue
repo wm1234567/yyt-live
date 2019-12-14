@@ -56,49 +56,42 @@
                 store_id: ''
             }
         },
-        // 初始数据
-        onLoad() {
-            this.store_id = STORE_ID;
-            this.livedemd();
-        },
+
         // 下拉刷新
         onPullDownRefresh() {
-            console.log('onPullDownRefresh');
             this.livedemd();
             this.page = 0
         },
         // 上拉加载
         onReachBottom() {
-            console.log("onReachBottom");
             setTimeout(() => {
                 this.setLivedemd();
             }, 300);
         },
-
+        // 初始数据
+        onLoad() {
+            this.store_id = STORE_ID;
+            this.livedemd();
+        },
         methods: {
             livedemd() {
-                uni.showLoading({
-                    title: '加载中',
+                requestUrl({
+                    url: 'recommend_lists',
+                    header: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    },
+                    method: 'POST',
+                    data: {
+                        store_id: this.store_id
+                    },
+                    success: res => {
+                        console.log('success点播列表', res)
+                        uni.stopPullDownRefresh();
+                        if (res.data.code == 1001) {
+                            this.livedemandlist = res.data.data;
+                        }
+                    },
                 });
-                setTimeout(() => {
-                    requestUrl({
-                        url: 'recommend_lists',
-                        header: {
-                            "Content-Type": "application/x-www-form-urlencoded"
-                        },
-                        method: 'POST',
-                        data: {
-                            store_id: this.store_id
-                        },
-                        success: res => {
-                            console.log('success', res)
-                            uni.stopPullDownRefresh();
-                            if (res.data.code == 1001) {
-                                this.livedemandlist = res.data.data;
-                            }
-                        },
-                    });
-                }, 300);
             },
             // 查看更多
             setLivedemd() {

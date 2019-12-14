@@ -129,12 +129,14 @@
         },
         onLoad(opt) {
             // 获取可见视图信息
-            uni.getSystemInfo({
-                success: res => {
-                    console.log(res.windowHeight);
-                    this._windowHeight = res.windowHeight - 90;
-                }
-            })
+            // uni.getSystemInfo({
+            //     success: res => {
+            //         console.log(res.windowHeight);
+            //         this._windowHeight = res.windowHeight - 90;
+            //     }
+            // })
+            var clientHeight = document.body.clientHeight;
+            this._windowHeight = clientHeight - 90;
             this.store_id = STORE_ID;
             this.type_id = opt.type_id
             this.nowIndex = Number(opt.nowIndex)
@@ -144,9 +146,6 @@
         methods: {
             // 分类标题
             nav() {
-                uni.showLoading({
-                    title: '加载中',
-                });
                 requestUrl({
                     url: 'course_type',
                     header: {

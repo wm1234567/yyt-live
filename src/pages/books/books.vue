@@ -44,9 +44,6 @@
         },
         methods: {
             load() {
-                uni.showLoading({
-                    title: '加载中',
-                });
                 requestUrl({
                     url: 'shop_lists',
                     header: {

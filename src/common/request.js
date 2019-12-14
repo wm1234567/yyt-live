@@ -1,6 +1,4 @@
 
-/* 公共图片路径前缀 */
-const IMGURL = '';
 
 /**
  * 公共 门店ID
@@ -55,11 +53,11 @@ const requestUrl = ({
             "Content-Type": "application/x-www-form-urlencoded"
         },
         success: res => {
-            uni.hideLoading();
+            // uni.hideLoading();
             return typeof success == 'function' && success(res)
         },
         fail: res => {
-            uni.hideLoading();
+            // uni.hideLoading();
             // uni.showModal({
             //     title: '网络错误',
             //     content: '网络出错，请刷新重试',
@@ -68,7 +66,7 @@ const requestUrl = ({
             return typeof fail == 'function' && fail(res)
         },
         complete: res => {
-            uni.hideLoading()
+            // uni.hideLoading()
             return typeof complete == 'function' && complete(res)
         }
     });
@@ -76,7 +74,6 @@ const requestUrl = ({
 
 module.exports = {
     requestUrl: requestUrl,
-    IMGURL: IMGURL,
     STORE_ID: STORE_ID,
     URL: URL
 }

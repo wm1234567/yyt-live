@@ -5,7 +5,7 @@
 			<view class="yy-mask"></view>
 			<view class="yy-modelContent">
 				<view class="yy-title">
-					<img src="static/wxIcon.png" alt="" width="50px" height="40px">
+					<!-- <img src="static/wxIcon.png" alt="" width="50px" height="40px"> -->
 					<view class="yy-title-text" style="margin-top:10px">请同意授权</view>
 					<view class="yy-title-text">· 以便为您提供更好的服务</view>
 				</view>
@@ -17,15 +17,15 @@
 		<!-- 登录授权 -->
 		<yyt-login />
 		<!-- 轮播图 -->
-		<yyt-banner :banner="banner" />
+		<yyt-banner :banner="banner"/>
 		<!-- 课程分类 -->
-		<yyt-nav :navlist="navlist" />
+		<yyt-nav :navlist="navlist"/>
 		<!-- 直播课程 -->
-		<yyt-live-class :liveclass="liveclass" v-show="!showFlg" />
+		<yyt-live-class :liveclass="liveclass" v-show="!showFlg"/>
 		<!-- 精品点播 -->
-		<yyt-live-demand :livedemand="livedemand" />
+		<yyt-live-demand :livedemand="livedemand"/>
 		<!-- 精品书籍 -->
-		<yyt-books :books="books" />
+		<yyt-books :books="books"/>
 	</view>
 </template>
 
@@ -128,9 +128,6 @@
 			},
 			// 初始化首页数据
 			load() {
-				uni.showLoading({
-					title: '加载中',
-				});
 				var openid = uni.getStorageSync('openid');
 				// 轮播图数据
 				requestUrl({

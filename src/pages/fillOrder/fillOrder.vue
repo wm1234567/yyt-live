@@ -40,7 +40,7 @@
                 <text>￥{{ allPrice }}</text>
             </view>
             <view class="yyt-fillOrder-footer-botton">
-                <button :loading="loadingFLg" :disabled="disabledFlg" @click="pay">结算</button>
+                <button style="border-radius:0" :loading="loadingFLg" :disabled="disabledFlg" @click="pay">结算</button>
             </view>
         </view>
     </view>
@@ -341,7 +341,7 @@
     }
 
     .list-info {
-        width: 62%;
+        width: 70%;
         height: 120rpx;
         float: left;
     }
@@ -422,7 +422,7 @@
     }
 
     .nums-t {
-        width: 46%;
+        width: 50%;
         height: 70rpx;
         line-height: 70rpx;
         float: left;
@@ -440,23 +440,23 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 100rpx;
-        line-height: 100rpx;
+        height: 90rpx;
+        line-height: 90rpx;
         background: #fff;
         border-top: 1rpx solid rgba(0, 0, 0, 0.1);
     }
 
     .yyt-fillOrder-footer-allfee {
-        width: 56%;
-        height: 100rpx;
-        line-height: 100rpx;
+        width: 71%;
+        height: 90rpx;
+        line-height: 90rpx;
         padding-left: 30rpx;
         float: left;
     }
 
     .yyt-fillOrder-footer-botton {
-        width: 40%;
-        height: 100rpx;
+        width: 25%;
+        height: 90rpx;
         float: left;
     }
 
@@ -466,15 +466,13 @@
     }
 
     .yyt-fillOrder-footer-botton button {
-        width: 70%;
-        height: 70rpx;
-        margin: 0 auto;
+        width: 100%;
+        height: 90rpx;
         background: #4986ff;
         color: #fff;
         text-align: center;
-        line-height: 75rpx;
-        margin-top: 15rpx;
-        border-radius: 40rpx;
+        line-height: 90rpx;
         font-size: 30rpx
     }
+
 </style>

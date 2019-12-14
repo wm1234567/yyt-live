@@ -24,7 +24,7 @@
                 <view class="user-view" v-for='(item,index) in item.anchor_id' :key="index"
                     @click="teacher(item.anchor_id)">
                     <img :src="item.avatar" />
-                    <view>{{item.realname}}</view>
+                    <view>{{ item.realname }}</view>
                 </view>
             </view>
             <view class="space"></view>
@@ -85,9 +85,6 @@
         },
         methods: {
             load() {
-                uni.showLoading({
-                    title: '加载中',
-                });
                 requestUrl({
                     url: 'course_lists',
                     header: {

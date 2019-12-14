@@ -15,7 +15,7 @@
         </scroll-view>
         <form @submit="send">
             <input class="msg" type="text" maxlength="50" :disabled="disabledFlg" v-model="valMsg" name="msg"
-                @blur.prevent="changeCount()" :focus="focusFlg" placeholder="我来说两句">
+                @blur.prevent="changeCount()" :focus="focusFlg" placeholder="我来说两句" placeholder-style="font-size:29rpx">
             <button class="submitmsg" type="primary" :disabled="disabledFlg" formType="submit">{{ subMsg }}</button>
         </form>
     </view>
@@ -32,7 +32,7 @@
             return {
                 focusFlg: false,
                 valMsg: '',
-                subMsg: '发消息',
+                subMsg: '发送',
                 disabledFlg: false,
                 path: "", //后台服务地址
                 socket: "",
@@ -92,7 +92,7 @@
                     var getServerMsg_sf = JSON.parse(getServerMsg.data);
                     if (getServerMsg_sf.status_banned == 1) { //不禁言
                         this.disabledFlg = false;
-                        this.subMsg = '发消息'
+                        this.subMsg = '发送'
                     } else { //禁言
                         this.disabledFlg = true;
                         this.subMsg = '禁言中'
@@ -178,7 +178,9 @@
         height: auto;
         background: #f4f4f4f4
     }
-
+    .yyt-scroll{
+        height: 90rpx;
+    }
     .yyt-chat {
         width: 95%;
         height: auto;
@@ -210,20 +212,21 @@
     }
 
     .msg {
-        width: 70%;
+        width: 80%;
         height: 80rpx;
         border: 1rpx solid #dedede;
         float: left;
-        border-radius: 10rpx
+        border-radius: 10rpx;
+        font-size: 28rpx
     }
 
     .submitmsg {
-        width: 26%;
+        width: 16%;
         height: 80rpx;
         float: left;
         margin-left: 1%;
         line-height: 80rpx;
-        font-size: 30rpx
+        font-size: 28rpx
     }
 
     .yyt-chat-user {

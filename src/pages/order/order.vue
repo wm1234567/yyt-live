@@ -178,9 +178,6 @@
         },
         methods: {
             load() {
-                uni.showLoading({
-                    title: '加载中',
-                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'shop_order_lists',
