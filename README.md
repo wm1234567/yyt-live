@@ -12,7 +12,7 @@
 
 ### Compiles and minifies for production
 ```
-打包发布：npm run build
+打包发布：npm run build:h5
 ```
 
 ### Customize configuration

@@ -53,7 +53,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     //引入video样式
@@ -64,10 +63,9 @@
     import 'videojs-contrib-hls'
     export default {
         name: 'YytBanner',
+        props: ['liveclass'], //父组件传值
         data() {
             return {
-                URL: '', //图片前缀
-                liveclass: {},
                 playerOptions: {
                     // playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
                     autoplay: true, //如果true,浏览器准备好时开始回放。
@@ -95,33 +93,11 @@
             }
         },
         created() {
-            uni.showLoading({
-                title: '加载中',
-            });
-            this.URL = IMGURL;
-            //  轮播图数据
-            requestUrl({
-                url: 'course_index',
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: 'POST',
-                data: {
-                    store_id: STORE_ID
-                },
-                success: res => {
-                    uni.hideLoading();
-                    console.log('success', res)
-                    if (res.data.code == 1001) {
-                        this.liveclass = res.data.data
-                        if (res.data.data.dbUrl) {
-                            this.playerOptions.sources[0].src = res.data.data.dbUrl;
-                        } else {
-                            this.playerOptions.sources[0].src = res.data.data.playUrl;
-                        }
-                    }
-                },
-            });
+            if (this.liveclass.dbUrl) {
+                this.playerOptions.sources[0].src = this.liveclass.dbUrl;
+            } else {
+                this.playerOptions.sources[0].src = this.liveclass.playUrl;
+            }
         },
 
         methods: {
@@ -131,12 +107,15 @@
                     url: '/pages/liveclass/liveclass'
                 })
             },
+            
             onPlayerPlay(e) {
 
             },
+
             onPlayerPause(e) {
 
             },
+
             teacher(e) {
                 uni.navigateTo({
                     url: '/pages/teacherInfo/teacherInfo?anchor_id=' + e

@@ -65,7 +65,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js';
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
@@ -88,7 +87,9 @@
         onLoad() {
             this.store_id = STORE_ID;
         },
-        // 上拉加载
+        /**
+         * 上拉加载
+         */
         onReachBottom() {
             this.status = 'loading';
             setTimeout(() => {
@@ -127,7 +128,6 @@
                         title: text
                     },
                     success: res => {
-                        uni.hideLoading();
                         console.log('success搜索列表', res)
                         if (res.data.code == 1001) {
                             this.list = res.data.data

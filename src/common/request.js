@@ -6,7 +6,7 @@ const IMGURL = '';
  * 公共 门店ID
  */
 
-// const STORE_ID = '5'; //开发
+// const STORE_ID = '5'; //开发版
 const STORE_ID = '1'; //正式测试
 // const STORE_ID = '2'; //正式使用 屹伦教育
 // const STORE_ID = '4'; //正式使用 玉溪小红马网络科技有限公司
@@ -16,7 +16,7 @@ const STORE_ID = '1'; //正式测试
  * 公共 授权地址
  */
 
-// store_id = 5 测试
+// store_id = 5 开发版
 // const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaf87a0b12aaeaaf8&redirect_uri=http%3A%2F%2Fzb1.yueyat.net%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
 // store_id = 1 正式测试
@@ -46,7 +46,6 @@ const requestUrl = ({
     // let server = 'https://yytzb.yueyat.net/api/'; //开发基域名
 
     let server = 'https://zb.yueyat.vip/api/'; //正式使用基域名
-
 
     uni.request({
         url: server + url, //基域名 + 方法

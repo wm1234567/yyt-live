@@ -14,19 +14,34 @@
                         <view class='list-title'>
                             <view class="list-title-tit">{{ itemShop.title }}</view>
                             <view class="list-title-tq" v-show="itemShop.status == 2"
-                                @click="shop_order_refund(itemShop.items_id, itemShop.order_id)">退款</view>
+                                @click="shop_order_refund(itemShop.items_id, itemShop.order_id)">
+                                退款
+                            </view>
                             <view class="list-title-tq" v-show="itemShop.status == 3 && itemShop.refund_status == 1"
-                                @click="shop_order_refund(itemShop.items_id, itemShop.order_id)">退款</view>
+                                @click="shop_order_refund(itemShop.items_id, itemShop.order_id)">
+                                退款
+                            </view>
                             <view class="list-title-ok" v-show="itemShop.status == 3 && itemShop.refund_status == 2"
-                                @click="shop_order_refund_send(itemShop.items_id)">买家发货</view>
-                            <view class="list-title-tq" v-show="itemShop.status == 3 && itemShop.refund_status == 3">已拒绝</view>
-                            <view class="list-title-ok" v-show="itemShop.status == 3 && itemShop.refund_status == 4">买家已发货</view>
+                                @click="shop_order_refund_send(itemShop.items_id)">
+                                买家发货
+                            </view>
+                            <view class="list-title-tq" v-show="itemShop.status == 3 && itemShop.refund_status == 3">
+                                已拒绝
+                            </view>
+                            <view class="list-title-ok" v-show="itemShop.status == 3 && itemShop.refund_status == 4">
+                                买家已发货
+                            </view>
                             <view class="list-title-ok" v-show="itemShop.status == 3"
-                                @click="getOrder(itemShop.items_id)">确认收货</view>
+                                @click="getOrder(itemShop.items_id)">
+                                确认收货
+                            </view>
                             <view class="list-title-ok" v-show="itemShop.status == 4 && itemShop.appraise_status == 1"
-                                @click="evaluation(itemShop.items_id, itemShop.items_id)">待评价</view>
+                                @click="evaluation(itemShop.items_id, itemShop.items_id)">
+                                待评价
+                            </view>
                             <view class="list-title-ypl" v-show="itemShop.status == 4 && itemShop.appraise_status == 2">
-                                已评价</view>
+                                已评价
+                            </view>
                         </view>
                         <view class='list-num'>
                             <view class='num-fee'>￥{{ itemShop.price }}</view>
@@ -104,7 +119,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue';
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -133,13 +147,13 @@
                     title: '退款单'
                 }],
                 nowIndex: 0, //选择卡索引
-                URL: '',
                 store_id: '',
                 orderlist: [], //订单列表
                 refundorderlist: [], //退款订单列表
                 status: 1, //订单状态
             }
         },
+        // 下拉刷新
         onPullDownRefresh() {
             this.load()
         },
@@ -157,7 +171,6 @@
         },
         onLoad() {
             this.store_id = STORE_ID;
-            this.URL = IMGURL;
             this.load()
         },
         onShow() {
@@ -165,6 +178,9 @@
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'shop_order_lists',
@@ -480,7 +496,7 @@
         color: #007AFF;
         font-weight: bold;
         background: url('/static/active.jpg') no-repeat;
-        background-position: bottom ;
+        background-position: bottom;
     }
 
     .null {

@@ -12,44 +12,20 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
         name: 'YytBanner',
+        props: ['navlist'], //父组件传值
         data() {
             return {
                 indicatorDots: true,
                 autoplay: true,
                 interval: 2000,
-                URL: '', //图片前缀
-                navlist: {}, //轮播图数据
             }
         },
         created() {
-            uni.showLoading({
-                title: '加载中',
-            })
-            
-            this.URL = IMGURL;
-            //  轮播图数据
-            requestUrl({
-                url: 'course_type',
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: 'POST',
-                data: {
-                    store_id: STORE_ID
-                },
-                success: res => {
-                    uni.hideLoading();
-                    console.log('success', res)
-                    if (res.data.code == 1001) {
-                        this.navlist = res.data.data
-                    }
-                },
-            });
+
         },
         methods: {
             // 跳转导航分类

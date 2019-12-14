@@ -15,7 +15,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
@@ -29,7 +28,6 @@
         onLoad(opt) {
             console.log(opt)
             this.type = opt.type;
-            this.URL = IMGURL;
             requestUrl({
                 url: 'banner_info',
                 header: {
@@ -41,7 +39,6 @@
                     store_id: STORE_ID
                 },
                 success: res => {
-                    // uni.hideLoading();
                     console.log('success轮播图详情', res)
                     if (res.data.code == 1001) {
                         this.bannerD = res.data.data

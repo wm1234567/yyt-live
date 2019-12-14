@@ -24,40 +24,18 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
         name: 'YytBooks',
+        props: ['books'],
         data() {
             return {
-                URL:'',
-                books: [],
+ 
             }
         },
         created() {
-            uni.showLoading({
-                title: '加载中',
-            });
-            this.URL = IMGURL;
-            requestUrl({
-                url: 'shop_lists',
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: 'POST',
-                data: {
-                    store_id: STORE_ID,
-                    num: 0
-                },
-                success: res => {
-                    uni.hideLoading();
-                    console.log('success首页书籍', res)
-                    if (res.data.code == 1001) {
-                        this.books = res.data.data
-                    }
-                },
-            });
+
         },
         methods: {
             // 跳转精品书籍
@@ -75,7 +53,5 @@
     }
 </script>
 <style scoped>
-    /* scroll-view{
-       padding-right: 20rpx
-    } */
+
 </style>

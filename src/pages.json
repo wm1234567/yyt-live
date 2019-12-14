@@ -156,6 +156,7 @@
 		"path": "pages/colectCourse/colectCourse",
 		"style": {
 			"navigationBarTitleText": "收藏课程",
+			"enablePullDownRefresh": true,
 			"app-plus": {
 				"titleNView": {
 					"type": "transparent"

@@ -72,7 +72,6 @@
                             var imgStr = JSON.parse(res.data)
                             if (imgStr.code == 1001) {
                                 _imgArr.push(imgStr.data)
-                                console.log(_imgArr)
                                 if (_imgArr.length == that.imgArr.length) {
                                     that.formData(content, _imgArr)
                                 }

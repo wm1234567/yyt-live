@@ -183,7 +183,6 @@
     import YytWebScoket from '@/yyt-components/yyt-webscoket/yyt-webscoket'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     //引入video样式
@@ -205,7 +204,6 @@
                 collect_status: true,
                 course_id: '', //课程ID
                 liveclassD: {}, //数据集合
-                URL: '', //图片路径前缀
                 nowIndex: 0,
                 _windowHeight: '',
                 navList: [{
@@ -254,7 +252,6 @@
             var clientHeight = document.body.clientHeight
             console.log(clientHeight)
             this._windowHeight = clientHeight - 300
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.course_id = opt.course_id;
             if (opt.list_id) {
@@ -412,7 +409,7 @@
                     }
                 }
             },
-            // 监听创建播放器
+            // 监听创建播放器 给video加同层播放属性 兼容安卓
             onPlayerCanplay(player) {
                 document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");
                 document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-fullscreen");

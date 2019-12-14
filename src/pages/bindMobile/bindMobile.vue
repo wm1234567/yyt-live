@@ -96,7 +96,6 @@
 								duration: 2000,
 								icon: "none"
 							});
-							// this.$store.commit('yesTel')
 							setTimeout(() => {
 								uni.navigateBack({})
 							}, 1000)

@@ -45,7 +45,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -61,7 +60,6 @@
                     contentrefresh: '加载中',
                     contentnomore: '没有更多啦'
                 },
-                URL: '',
                 livelist: [],
                 store_id: '',
                 page: 0
@@ -82,12 +80,14 @@
         },
         //初始加载
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.load();
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 requestUrl({
                     url: 'course_lists',
                     header: {
@@ -108,7 +108,6 @@
             },
             // 查看更多
             setload() {
-                console.log(666)
                 this.status = 'loading';
                 var page = this.page
                 page += 1;
@@ -127,7 +126,7 @@
                         if (res.data.code == 1001) {
                             var newlivelist = res.data.data;
                             this.livelist = this.livelist.concat(newlivelist);
-                             this.status = 'more';
+                            this.status = 'more';
                         }
                         if (res.data.code == 1002) {
                             this.status = 'noMore';

@@ -88,9 +88,9 @@
                                 duration: 2000,
                                 icon: "none"
                             });
-                            // setTimeout(()=>{
-                            //     uni.navigateBack({})
-                            // },500)
+                            setTimeout(()=>{
+                                uni.navigateBack({})
+                            },500)
                         }else{
                             uni.showToast({
                                 title: res.data.message,

@@ -73,7 +73,6 @@
                     <input class="yyt-exc-input" name="code" type="text">
                     <button class="submit-button" form-type="submit">兑换</button>
                 </form>
-                <!-- <view class="uni-share-btn" @click="cancel('share')">取消分享</view> -->
             </view>
         </uni-popup>
     </view>
@@ -84,7 +83,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -101,7 +99,6 @@
                     contentrefresh: '加载中',
                     contentnomore: '没有更多啦'
                 },
-                URL: '',
                 livelist: [],
                 store_id: '',
                 page: 0,
@@ -124,7 +121,6 @@
         },
         //初始加载
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID
             this.load();
         },

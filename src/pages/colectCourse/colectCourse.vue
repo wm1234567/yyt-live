@@ -20,14 +20,6 @@
                 <!-- 录播 -->
                 <view class="yyt-list-l"></view>
                 <view class="yyt-list-title">{{item.title}}</view>
-                <!-- 老师列表 -->
-                <!-- <view class="yyt-list-user">
-                    <view class="user-view" v-for='(item,index) in item.anchor_id' :key="index"
-                        @click="teacher(item.anchor_id)">
-                        <img :src="item.avatar" />
-                        <view>{{item.realname}}</view>
-                    </view>
-                </view> -->
                 <view class="space"></view>
             </view>
             <view class="yyt-con" v-else>
@@ -66,7 +58,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -95,7 +86,6 @@
         },
         // 上拉加载
         onReachBottom() {
-            console.log("onReachBottom");
             this.status = 'loading';
             setTimeout(() => {
                 this.setload();
@@ -103,12 +93,14 @@
         },
         //初始加载
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID
             this.load();
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'collect_list',
@@ -123,9 +115,9 @@
                     },
                     success: res => {
                         console.log('success', res)
+                        uni.stopPullDownRefresh();
                         if (res.data.code == 1001) {
                             this.livelist = res.data.data;
-                            uni.stopPullDownRefresh();
                         }
                     },
                 });

@@ -56,7 +56,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -100,7 +99,6 @@
                 that.addressInfo = res;
                 console.log(that.addressInfo)
             })
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.load();
         },
@@ -275,6 +273,7 @@
                     }
                 }
             },
+            // 设置默认地址
             switch1Change: function (e) {
                 console.log('switch1 发生 change 事件，携带值为', e.target.value)
                 if (e.target.value) {

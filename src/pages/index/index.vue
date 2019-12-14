@@ -17,15 +17,15 @@
 		<!-- 登录授权 -->
 		<yyt-login />
 		<!-- 轮播图 -->
-		<yyt-banner />
-		<!-- 分类导航 -->
-		<yyt-nav />
+		<yyt-banner :banner="banner" />
+		<!-- 课程分类 -->
+		<yyt-nav :navlist="navlist" />
 		<!-- 直播课程 -->
-		<yyt-live-class v-show="!showFlg" />
+		<yyt-live-class :liveclass="liveclass" v-show="!showFlg" />
 		<!-- 精品点播 -->
-		<yyt-live-demand />
+		<yyt-live-demand :livedemand="livedemand" />
 		<!-- 精品书籍 -->
-		<yyt-books />
+		<yyt-books :books="books" />
 	</view>
 </template>
 
@@ -38,7 +38,6 @@
 	import YytLogin from '@/yyt-components/yyt-login/yyt-login'
 	import {
 		requestUrl,
-		IMGURL,
 		STORE_ID,
 		URL
 	} from '@/common/request.js'
@@ -56,19 +55,25 @@
 			return {
 				showFlg: false,
 				flg: true,
-				store_id: '',
-				URL: ''
+				store_id: '', //商户ID
+				URL: '', // 授权地址
+				banner: {}, //轮播图数据
+				navlist: {}, //课程分类
+				liveclass: {}, //直播推荐课程
+				livedemand: {}, //点播推荐课程
+				books: {}, //精品书籍
 			}
 		},
+		// 下拉刷新
 		onPullDownRefresh() {
-			// console.log('onPullDownRefresh');
-			uni.stopPullDownRefresh();
+			this.load()
 		},
 		onLoad() {
 			// var openid = 'oY_QVv32gzUl2FJe5hoYSpscEk-Y';
 			// uni.setStorageSync('openid', openid);
 			this.store_id = STORE_ID;
 			this.URL = URL;
+			this.load()
 		},
 		onShow() {
 			/**
@@ -115,15 +120,108 @@
 				console.log('浏览器')
 			}
 		},
-		created() {
-			// this.$store.commit('yescode')
-			// this.$store.commit('changecode',{code:'哈哈'})
-			// console.log(this.$store.state.sqCode)
-		},
+
 		methods: {
 			setcode() {
-				window.location.href = this.URL
 				this.showFlg = false
+				window.location.href = this.URL
+			},
+			// 初始化首页数据
+			load() {
+				uni.showLoading({
+					title: '加载中',
+				});
+				var openid = uni.getStorageSync('openid');
+				// 轮播图数据
+				requestUrl({
+					url: 'banner_lists',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: STORE_ID,
+						account: this.store_id,
+					},
+					success: res => {
+						console.log('success轮播图', res)
+						if (res.data.code == 1001) {
+							this.banner = res.data.data
+						}
+					},
+				});
+				// 课程分类数据
+				requestUrl({
+					url: 'course_type',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: this.store_id
+					},
+					success: res => {
+						console.log('success课程分类', res)
+						if (res.data.code == 1001) {
+							this.navlist = res.data.data
+						}
+					},
+				});
+				// 直播推荐课程数据
+				requestUrl({
+					url: 'course_index',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: this.store_id
+					},
+					success: res => {
+						console.log('success', res)
+						if (res.data.code == 1001) {
+							this.liveclass = res.data.data
+
+						}
+					},
+				});
+				// 点播推荐课程数据
+				requestUrl({
+					url: 'course_recommend',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: this.store_id
+					},
+					success: res => {
+						console.log('success首页点播', res)
+						if (res.data.code == 1001) {
+							this.livedemand = res.data.data;
+							// uni.stopPullDownRefresh();
+						}
+					},
+				});
+				// 精品书籍数据
+				requestUrl({
+					url: 'shop_lists',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: STORE_ID,
+						num: 0
+					},
+					success: res => {
+						console.log('success首页书籍', res)
+						if (res.data.code == 1001) {
+							this.books = res.data.data
+						}
+					},
+				});
+				uni.stopPullDownRefresh();
 			},
 			// 传值用户信息登录 并检测用户是否绑定手机号
 			login() {
@@ -144,7 +242,6 @@
 					success: res => {
 						console.log('是否绑定手机号', res)
 						if (res.data.code == 1003) { //1003 用户未绑定手机号码
-							// this.$store.commit('noTel')
 							uni.showModal({
 								content: '请绑定您的手机号',
 								showCancel: false,

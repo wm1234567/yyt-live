@@ -31,7 +31,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -47,7 +46,6 @@
                     contentrefresh: '加载中',
                     contentnomore: '没有更多啦'
                 },
-                URL: '',
                 livelist: [],
                 store_id: '',
                 page: 0
@@ -69,12 +67,14 @@
 
         //初始加载
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.load();
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'course_history',
@@ -89,17 +89,9 @@
                     },
                     success: res => {
                         console.log('success', res)
+                        uni.stopPullDownRefresh();
                         if (res.data.code == 1001) {
                             this.livelist = res.data.data;
-                            uni.stopPullDownRefresh();
-                        }
-                        if (res.data.code == 1002) {
-                            // uni.showToast({
-                            //     title: res.data.message,
-                            //     mask: false,
-                            //     duration: 2000,
-                            //     icon: "none"
-                            // });
                         }
                     },
                 });

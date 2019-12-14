@@ -1,4 +1,5 @@
 <template>
+	<!-- 暂时弃用组件就不删了 万一有用呢?-->
 	<view class="yyt-container">
 		<!-- 轮播图 -->
 		<swiper class="swiper" circular :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval"
@@ -66,9 +67,7 @@
 			uni.stopPullDownRefresh();
 		},
 		onLoad() {
-			// uni.setNavigationBarTitle({
-			// 	title: '商城'
-			// })
+
 		},
 		methods: {
 			booksD() {

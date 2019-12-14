@@ -1,6 +1,6 @@
 <template>
     <view class="yyt-container">
-         <view class="yyt-container" v-for="(item,index) in livelist" :key="index">
+        <view class="yyt-container" v-for="(item,index) in livelist" :key="index">
             <view class="yyt-live-class" v-if="item.type == 1">
                 <!-- 直播 -->
                 <view class="yyt-live"
@@ -19,15 +19,7 @@
                 </view>
                 <!-- 录播 -->
                 <view class="yyt-list-l"></view>
-                <view class="yyt-list-title">{{item.title}}</view>
-                <!-- 老师列表 -->
-                <!-- <view class="yyt-list-user">
-                    <view class="user-view" v-for='(item,index) in item.anchor_id' :key="index"
-                        @click="teacher(item.anchor_id)">
-                        <img :src="item.avatar" />
-                        <view>{{item.realname}}</view>
-                    </view>
-                </view> -->
+                <view class="yyt-list-title">{{ item.title }}</view>
                 <view class="space"></view>
             </view>
             <view class="yyt-con" v-else>
@@ -66,7 +58,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -82,7 +73,6 @@
                     contentrefresh: '加载中',
                     contentnomore: '没有更多啦'
                 },
-                URL: '',
                 livelist: [],
                 store_id: '',
                 page: 0
@@ -103,12 +93,14 @@
         },
         //初始加载
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID
             this.load();
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'pay_course',
@@ -123,9 +115,9 @@
                     },
                     success: res => {
                         console.log('success', res)
+                        uni.stopPullDownRefresh();
                         if (res.data.code == 1001) {
                             this.livelist = res.data.data;
-                            uni.stopPullDownRefresh();
                         }
                     },
                 });

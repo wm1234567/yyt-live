@@ -53,7 +53,7 @@
                 imgist: [],
                 store_id: '',
                 items_id: '',
-                refund_express_id:''
+                refund_express_id:'' //快递公司名
             }
         },
 

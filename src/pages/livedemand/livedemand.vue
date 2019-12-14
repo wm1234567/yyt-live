@@ -10,7 +10,8 @@
             </view>
             <view class="yyt-bottom">
                 <view class="yyt-bottom-lr">
-                    <img v-for="(item,index) in item.anchor_id" :key="index" :src="item.avatar" @click="teacher(item.anchor_id)"/>
+                    <img v-for="(item,index) in item.anchor_id" :key="index" :src="item.avatar"
+                        @click="teacher(item.anchor_id)" />
                 </view>
                 <view class="yyt-bottom-lr">
                     <view class="lr-class-type" v-if="item.paytype == '1'">￥{{ item.price }}</view>
@@ -35,7 +36,6 @@
     import uniLoadMore from '@/components/uni-load-more/uni-load-more.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -51,7 +51,6 @@
                     contentrefresh: '加载中',
                     contentnomore: '没有更多啦'
                 },
-                URL: '',
                 livedemandlist: [],
                 page: 0,
                 store_id: ''
@@ -59,7 +58,6 @@
         },
         // 初始数据
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.livedemd();
         },
@@ -79,6 +77,9 @@
 
         methods: {
             livedemd() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 setTimeout(() => {
                     requestUrl({
                         url: 'recommend_lists',
@@ -91,17 +92,9 @@
                         },
                         success: res => {
                             console.log('success', res)
+                            uni.stopPullDownRefresh();
                             if (res.data.code == 1001) {
                                 this.livedemandlist = res.data.data;
-                                uni.stopPullDownRefresh();
-                            }
-                            if (res.data.code == 1002) {
-                                uni.showToast({
-                                    title: res.data.message,
-                                    mask: false,
-                                    duration: 2000,
-                                    icon: "none"
-                                });
                             }
                         },
                     });

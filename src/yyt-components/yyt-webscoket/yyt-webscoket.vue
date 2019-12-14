@@ -15,7 +15,7 @@
         </scroll-view>
         <form @submit="send">
             <input class="msg" type="text" maxlength="50" :disabled="disabledFlg" v-model="valMsg" name="msg"
-                @blur.prevent="changeCount()" :focus="focusFlg"  placeholder="我来说两句">
+                @blur.prevent="changeCount()" :focus="focusFlg" placeholder="我来说两句">
             <button class="submitmsg" type="primary" :disabled="disabledFlg" formType="submit">{{ subMsg }}</button>
         </form>
     </view>
@@ -24,7 +24,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL
     } from '@/common/request.js'
     export default {
         name: 'YytWebScoket',
@@ -53,7 +52,7 @@
             // this.path = "wss://yytzb.yueyat.net:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
             //     1 + "&type=" + 2
             // 使用版
-             this.path = "wss://zb.yueyat.vip:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
+            this.path = "wss://zb.yueyat.vip:5200?token=" + openid + "&group=" + this.course_id + "&login_type=" +
                 1 + "&type=" + 2
             this.init()
         },
@@ -62,7 +61,11 @@
 
             init: function () {
                 if (typeof (WebSocket) === "undefined") {
-                    alert("您的浏览器不支持socket")
+                    uni.showModal({
+                        title: '提示',
+                        content: '您的浏览器不支持socket',
+                        showCancel: false
+                    })
                 } else {
                     // 实例化socket
                     this.socket = new WebSocket(this.path)
@@ -77,7 +80,6 @@
                 }
             },
             open: function (e) {
-                console.log(this.path)
                 console.log("socket连接成功", e)
             },
             error: function () {
@@ -88,7 +90,6 @@
                 console.log('服务端:', getServerMsg);
                 if (getServerMsg.code == '12') {
                     var getServerMsg_sf = JSON.parse(getServerMsg.data);
-                    console.log('个人身份:', getServerMsg_sf);
                     if (getServerMsg_sf.status_banned == 1) { //不禁言
                         this.disabledFlg = false;
                         this.subMsg = '发消息'
@@ -130,14 +131,14 @@
             },
 
             close: function (e) {
-                console.log("socket已经关闭",this.destroyedFlg);
-                if(!this.destroyedFlg){
-                   setTimeout(()=>{
+                console.log("socket已经关闭", this.destroyedFlg);
+                if (!this.destroyedFlg) {
+                    setTimeout(() => {
                         this.init()
-                   },10000) 
+                    }, 10000)
                 }
             },
-          
+
             //实时滚动 
             goTop() {
                 let that = this;

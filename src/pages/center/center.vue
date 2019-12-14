@@ -85,7 +85,6 @@
 <script>
 	import {
 		requestUrl,
-		IMGURL,
 		STORE_ID
 	} from '@/common/request.js'
 
@@ -109,13 +108,15 @@
 			// })
 			var userInfo = uni.getStorageSync('userInfo');
 			this.user = userInfo;
-			this.URL = IMGURL;
 			this.store_id = STORE_ID
 			this.load();
 
 		},
 		methods: {
 			load() {
+				uni.showLoading({
+					title: '加载中',
+				});
 				var openid = uni.getStorageSync('openid');
 				requestUrl({
 					url: 'user_info',
@@ -128,18 +129,10 @@
 						account: openid,
 					},
 					success: res => {
-						console.log('success', res)
+						console.log('success个人中心', res)
+						uni.stopPullDownRefresh();
 						if (res.data.code == 1001) {
 							this.info = res.data.data;
-							uni.stopPullDownRefresh();
-						}
-						if (res.data.code == 1002) {
-							uni.showToast({
-								title: res.data.message,
-								mask: false,
-								duration: 2000,
-								icon: "none"
-							});
 						}
 					},
 				});

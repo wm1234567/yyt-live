@@ -27,7 +27,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
 
@@ -56,7 +55,6 @@
         //初始加载
         onLoad(opt) {
             this.fill = opt.fill
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.load();
         },
@@ -65,6 +63,9 @@
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 var openid = uni.getStorageSync('openid');
                 requestUrl({
                     url: 'address_lists',

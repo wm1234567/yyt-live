@@ -17,19 +17,16 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
         data() {
             return {
                 teacherInfo: {},
-                URL: ''
             }
         },
         onLoad(opt) {
             console.log(opt)
-            this.URL = IMGURL
             // 分类标题
             requestUrl({
                 url: 'anchor_info',
@@ -42,7 +39,6 @@
                     store_id: STORE_ID
                 },
                 success: res => {
-                    uni.hideLoading();
                     console.log('success教师详细', res)
                     if (res.data.code == 1001) {
                         this.teacherInfo = res.data.data

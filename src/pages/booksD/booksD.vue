@@ -82,7 +82,6 @@
     import uniPopup from '@/components/uni-popup/uni-popup.vue'
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
@@ -100,15 +99,10 @@
                 flag: false,
                 store_id: '',
                 booksD: {},
-                URL: ''
             }
         },
-        // // 下拉刷新
-        // onPullDownRefresh() {
-        //     this.load();
-        // },
+
         onLoad(opt) {
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             var openid = uni.getStorageSync('openid');
             requestUrl({
@@ -123,8 +117,6 @@
                     account: openid
                 },
                 success: res => {
-                    uni.hideLoading();
-                    // uni.stopPullDownRefresh();
                     console.log('success书籍D', res)
                     if (res.data.code == 1001) {
                         this.booksD = res.data.data

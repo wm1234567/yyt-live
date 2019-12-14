@@ -40,7 +40,6 @@
                 <view class="space"></view>
                 <!-- 商品循环结束 -->
             </view>
-
             <!-- 底部 -->
             <view class="yyt-cart-footer" v-if="carts.length != 0">
                 <view class='yyt-footer-left'>
@@ -67,14 +66,12 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
         data() {
             return {
                 store_id: '',
-                URL: '',
                 hasList: true, // 列表是否有数据
                 totalPrice: 0, // 总价，初始为0
                 allcount: 0,
@@ -84,7 +81,6 @@
             }
         },
         onLoad() {
-            this.URL = IMGURL;
             this.store_id = STORE_ID;
             this.load();
             this.getTotalPrice();

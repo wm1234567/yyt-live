@@ -26,7 +26,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
@@ -41,11 +40,13 @@
             this.load();
         },
         onLoad() {
-            this.URL = IMGURL;
             this.load();
         },
         methods: {
             load() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 requestUrl({
                     url: 'shop_lists',
                     header: {
@@ -57,11 +58,10 @@
                         num: 0
                     },
                     success: res => {
-                        uni.hideLoading();
-                        console.log('success首页书籍', res)
+                        uni.stopPullDownRefresh();
+                        console.log('success商城书籍列表', res)
                         if (res.data.code == 1001) {
                             this.books = res.data.data;
-                            uni.stopPullDownRefresh();
                         }
                     },
                 });

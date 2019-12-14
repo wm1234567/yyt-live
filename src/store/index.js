@@ -6,18 +6,14 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         sqCode: false,
-        tel: true
     },
     mutations: {
-        getCode(state){
+        getCode(state) {
             state.sqCode = true;
         },
-        noTel(state){
-            state.tel = false;
-        },
-        yesTel(state){
-            state.tel = true;
-        },
+        // this.$store.commit('yescode')
+        // this.$store.commit('changecode',{code:'哈哈'})
+        // console.log(this.$store.state.sqCode)
     }
 })
 

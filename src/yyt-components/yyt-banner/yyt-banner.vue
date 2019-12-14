@@ -17,45 +17,20 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js'
     export default {
         name: 'YytBanner',
+        props: ['banner'], //父组件传值
         data() {
             return {
                 indicatorDots: true,
                 autoplay: true,
                 interval: 5000,
-                URL: '', //图片前缀
-                banner: {}, //轮播图数据
             }
         },
         created() {
-            uni.showLoading({
-                title: '加载中',
-            });
-            this.URL = IMGURL;
-            var openid = uni.getStorageSync('openid');
-            //  轮播图数据
-            requestUrl({
-                url: 'banner_lists',
-                header: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                method: 'POST',
-                data: {
-                    store_id: STORE_ID,
-                    account: openid,
-                },
-                success: res => {
-                    uni.hideLoading();
-                    console.log('success轮播图', res)
-                    if (res.data.code == 1001) {
-                        this.banner = res.data.data
-                    }
-                },
-            });
+
         },
         methods: {
             bannerDetail(id, type, content) {
@@ -80,7 +55,6 @@
                 
             },
             search() {
-                console.log(889)
                 uni.navigateTo({
                     url: '/pages/search/search'
                 })

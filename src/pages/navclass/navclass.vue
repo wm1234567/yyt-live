@@ -87,7 +87,6 @@
 <script>
     import {
         requestUrl,
-        IMGURL,
         STORE_ID
     } from '@/common/request.js';
     import uniSearchBar from '@/components/uni-search-bar/uni-search-bar.vue';
@@ -111,7 +110,6 @@
                 searchVal: '',
                 nowIndex: 0,
                 _windowHeight: '',
-                URL: '',
                 store_id: ''
             }
         },
@@ -138,7 +136,6 @@
                 }
             })
             this.store_id = STORE_ID;
-            this.URL = IMGURL
             this.type_id = opt.type_id
             this.nowIndex = Number(opt.nowIndex)
             this.nav();
@@ -147,6 +144,9 @@
         methods: {
             // 分类标题
             nav() {
+                uni.showLoading({
+                    title: '加载中',
+                });
                 requestUrl({
                     url: 'course_type',
                     header: {
@@ -157,19 +157,10 @@
                         store_id: this.store_id
                     },
                     success: res => {
-                        console.log('分类标题',res)
-                        uni.hideLoading();
+                        console.log('分类标题', res)
                         uni.stopPullDownRefresh();
                         if (res.data.code == 1001) {
                             this.navList = res.data.data
-                        }
-                        if (res.data.code == 1002) {
-                            uni.showToast({
-                                title: res.data.message,
-                                mask: false,
-                                duration: 2000,
-                                icon: "none"
-                            });
                         }
                     },
                 });
@@ -189,7 +180,6 @@
                         title: ''
                     },
                     success: res => {
-                        uni.hideLoading();
                         console.log('success分类列表', res)
                         if (res.data.code == 1001) {
                             this.list = res.data.data
