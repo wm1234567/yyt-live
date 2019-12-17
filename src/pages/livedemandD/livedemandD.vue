@@ -251,7 +251,7 @@
             // 获取body 可视区域高度
             var clientHeight = document.body.clientHeight
             console.log(clientHeight)
-            this._windowHeight = clientHeight - 300
+            this._windowHeight = clientHeight - 250
             this.store_id = STORE_ID;
             this.course_id = opt.course_id;
             if (opt.list_id) {
@@ -279,6 +279,7 @@
                         if (res.data.code == 1001) {
                             this.liveclassD = res.data.data;
                             this.playerOptions.sources[0].src = res.data.data.url;
+                            this.playerOptions.poster = res.data.data.background;
 
                             if (res.data.data.collect_status == 1) {
                                 this.collect_status = true
@@ -382,30 +383,30 @@
             },
             // 小节播放
             minClass(paytype, demandUrl, pay_status, list_id) {
-                if (paytype == 1) {
-                    if (pay_status == 1) {
+                if (paytype == 1) { //paytype 小课支付类型 是否收费  和大课的 paytype 没有任何关系
+                    if (pay_status == 1) { //未购买
                         uni.showToast({
                             title: '请购买',
                             mask: false,
                             duration: 2000,
                             icon: "none"
                         });
-                    } else {
+                    } else { //已购买
                         this.playerOptions.sources[0].src = demandUrl;
                         this.history(list_id);
                     }
-                } else {
-                    if (list_id == this.liveclassD.list_id) {
+                } else { //免费小课
+                    if (list_id == this.liveclassD.list_id) { //是否当前小课在播放
                         uni.showToast({
                             title: '播放中',
                             mask: false,
                             duration: 2000,
                             icon: "none"
                         });
-                    } else {
-                        this.liveclassD.list_paytype = 2;
+                    } else { //下课切换
+                        this.liveclassD.list_paytype = 2; //修改当前大课默认小课的 状态为 免费
                         this.playerOptions.sources[0].src = demandUrl;
-                        this.history(list_id);
+                        this.history(list_id); //存播放当前小课 历史记录
                     }
                 }
             },

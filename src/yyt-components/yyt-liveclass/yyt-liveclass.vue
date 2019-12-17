@@ -92,11 +92,14 @@
                 }
             }
         },
-        created() {
+
+        beforeUpdate(){
             if (this.liveclass.dbUrl) {
                 this.playerOptions.sources[0].src = this.liveclass.dbUrl;
+                this.playerOptions.poster = this.liveclass.background;
             } else {
                 this.playerOptions.sources[0].src = this.liveclass.playUrl;
+                this.playerOptions.poster = this.liveclass.background;
             }
         },
 
@@ -107,7 +110,7 @@
                     url: '/pages/liveclass/liveclass'
                 })
             },
-            
+
             onPlayerPlay(e) {
 
             },

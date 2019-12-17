@@ -319,7 +319,7 @@
             // 获取body 可视区域高度
             var clientHeight = document.body.clientHeight
             console.log(clientHeight)
-            this._windowHeight = clientHeight - 300
+            this._windowHeight = clientHeight - 250
             this.store_id = STORE_ID;
             this.course_id = opt.course_id;
             if (opt.list_id) {
@@ -347,6 +347,7 @@
                         if (res.data.code == 1001) {
                             this.liveclassD = res.data.data;
                             this.playerOptions.sources[0].src = res.data.data.url;
+                            this.playerOptions.poster = res.data.data.background;
                             if (res.data.data.collect_status == 1) { //收藏了
                                 this.collect_status = true
                             } else {
@@ -449,15 +450,15 @@
             },
             // 小节播放
             minClass(paytype, live_status, viderUrl, pay_status, list_id) {
-                if (paytype == 1) { //小课付费
-                    if (pay_status == 1) {
+                if (paytype == 1) { //paytype 小课支付类型 是否收费  和大课的 paytype 没有任何关系
+                    if (pay_status == 1) { //未购买
                         uni.showToast({
                             title: '请购买',
                             mask: false,
                             duration: 2000,
                             icon: "none"
                         });
-                    } else {
+                    } else { //已购买
                         if (live_status == 1) {
                             uni.showToast({
                                 title: '未开播',
@@ -491,7 +492,7 @@
                         }
                     }
                 } else { //小课免费
-                    if (live_status == 2 && list_id == this.liveclassD.list_id) {
+                    if (live_status == 2 && list_id == this.liveclassD.list_id) { //当前小课为默认播放直播
                         uni.showToast({
                             title: '直播中',
                             mask: false,
@@ -499,7 +500,7 @@
                             icon: "none"
                         });
                     }
-                    if (live_status == 4 && list_id == this.liveclassD.list_id) {
+                    if (live_status == 4 && list_id == this.liveclassD.list_id) { //当前小课为默认播放回放
                         uni.showToast({
                             title: '回放中',
                             mask: false,
@@ -507,12 +508,15 @@
                             icon: "none"
                         });
                     }
-                    if (live_status == 2 && list_id != this.liveclassD.list_id) {
-                        this.liveclassD.list_paytype = 2;
-                        this.playerOptions.sources[0].type = 'video/mp4';
+                    if (live_status == 2 && list_id != this.liveclassD.list_id) { //当前小课不是默认播放直播  切换
+                        this.liveclassD.paytype = 2;
+                        this.liveclassD.live_status = live_status;
+                        this.playerOptions.sources[0].type = 'application/x-mpegURL';
                         this.playerOptions.sources[0].src = viderUrl;
+                        this.history(list_id);
                     }
-                    if (live_status == 4 && list_id != this.liveclassD.list_id) {
+                    if (live_status == 4 && list_id != this.liveclassD.list_id) { //当前小课不是默认播放回放  切换
+                        this.liveclassD.paytype = 2;
                         this.liveclassD.live_status = live_status;
                         this.playerOptions.sources[0].type = 'video/mp4';
                         this.playerOptions.sources[0].src = viderUrl;

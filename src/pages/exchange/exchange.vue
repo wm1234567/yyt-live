@@ -150,7 +150,6 @@
             },
             // 查看更多
             setload() {
-                console.log(666)
                 this.status = 'loading';
                 var page = this.page
                 page += 1;

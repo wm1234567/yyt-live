@@ -1,5 +1,6 @@
 <template>
     <view class="yyt-container">
+        <view class="space"></view>
         <view class="yyt-fillOrder-address-info" @click="addressList">
             <view class="info-name">{{ addressInfo.realname }}</view>
             <view class="info-MA" v-if="addressInfo">
@@ -309,7 +310,7 @@
         width: 80%;
         height: 100rpx;
         line-height: 100rpx;
-        color: #4986ff;
+        color: #666;
         padding-left: 160rpx
     }
 
@@ -320,7 +321,8 @@
 
     .info-MA-address {
         width: 100%;
-        height: 60rpx
+        height: 60rpx;
+        line-height: 40rpx
     }
 
     .yyt-fillOrder-list {

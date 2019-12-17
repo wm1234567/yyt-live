@@ -39,20 +39,19 @@
                         url: '/pages/bannerDetail/bannerDetail?banner_id=' + id + '&type=' + type
                     })
                 }
-                if(type == 2){
+                if (type == 2) {
                     window.location.href = content;
                 }
                 if (type == 3) {
                     uni.navigateTo({
-                        url: '/pages/booksD/booksD?shop_id=' + content 
+                        url: '/pages/liveclassD/liveclassD?course_id=' + content
                     })
                 }
                 if (type == 4) {
                     uni.navigateTo({
-                        url: '/pages/liveclassD/liveclassD?course_id=' + content
+                        url: '/pages/booksD/booksD?shop_id=' + content
                     })
                 }
-                
             },
             search() {
                 uni.navigateTo({

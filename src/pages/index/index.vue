@@ -175,7 +175,7 @@
 						store_id: this.store_id
 					},
 					success: res => {
-						console.log('success', res)
+						console.log('success直播推荐课程数据', res)
 						if (res.data.code == 1001) {
 							this.liveclass = res.data.data
 

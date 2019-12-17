@@ -5,8 +5,8 @@
  */
 
 // const STORE_ID = '5'; //开发版
-const STORE_ID = '1'; //正式测试
-// const STORE_ID = '2'; //正式使用 屹伦教育
+// const STORE_ID = '1'; //正式测试
+const STORE_ID = '2'; //正式使用 屹伦教育
 // const STORE_ID = '4'; //正式使用 玉溪小红马网络科技有限公司
 // const STORE_ID = '8'; //正式使用 鄂尔多斯橙果科技
 
@@ -18,10 +18,10 @@ const STORE_ID = '1'; //正式测试
 // const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaf87a0b12aaeaaf8&redirect_uri=http%3A%2F%2Fzb1.yueyat.net%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
 // store_id = 1 正式测试
-const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaf87a0b12aaeaaf8&redirect_uri=http%3A%2F%2Fmzb.yueyat.vip%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+// const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxaf87a0b12aaeaaf8&redirect_uri=http%3A%2F%2Fmzb.yueyat.vip%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
 // store_id = 2 正式使用 屹伦教育
-// const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfbd890210884b64d&redirect_uri=http%3A%2F%2Fyljy.yueyat.vip%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfbd890210884b64d&redirect_uri=http%3A%2F%2Fyljy.yueyat.vip%2F&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
 // store_id = 4 正式使用 玉溪小红马网络科技有限公司
 // const URL = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc238823e390e11b9&redirect_uri=http%3A%2F%2Fyxxhm.yueyat.vip&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';

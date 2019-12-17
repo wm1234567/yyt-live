@@ -50,6 +50,7 @@
         },
         methods: {
             formSubmit(e){
+                var _imgArr = []
                 var openid = uni.getStorageSync('openid');
                 if(e.detail.value.content == ''){
                     uni.showToast({
@@ -62,6 +63,32 @@
                 }
                 this.disabledFlg = true;
                 this.loadingFLg = true;
+                for(let i in this.imgArr){
+                    uni.uploadFile({
+                        url : 'https://yytzb.yueyat.net/api/upload_img',
+                        filePath: this.imgArr[i],
+                        name: 'file',
+                        success: function (res) {
+                            var imgStr = JSON.parse(res.data)
+                            if (imgStr.code == 1001) {
+                                _imgArr.push(imgStr.data)
+                                if (_imgArr.length == that.imgArr.length) {
+                                    that.formData(content, _imgArr)
+                                }
+                            }else{
+                                uni.showToast({
+                                    title: '图片上传失败',
+                                    mask: false,
+                                    duration: 2000,
+                                    icon: "none"
+                                });
+                            }
+                        }
+                    });
+                }
+
+            },
+            formData(content, _imgArr){
                 requestUrl({
                     url: 'shop_order_discuss',
                     header: {
@@ -71,9 +98,9 @@
                     data: {
                         account: openid,
                         store_id: this.store_id,
-                        content: e.detail.value.content,
+                        content: content,
                         level: this.level,
-                        discuss_pic: 1,
+                        discuss_pic: _imgArr,
                         items_id: this.items_id,
                         shop_id: this.shop_id
                     },
@@ -101,7 +128,6 @@
                         }
                     },
                 });
-
             },
             // 交易打分
             onChange(e) {
