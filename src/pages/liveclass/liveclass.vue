@@ -16,8 +16,6 @@
                     </view>
                 </view>
             </view>
-            <!-- 录播 -->
-            <view class="yyt-list-l"></view>
             <!-- 老师列表 -->
             <view class="yyt-list-title">{{item.title}}</view>
             <view class="yyt-list-user">

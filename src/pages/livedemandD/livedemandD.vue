@@ -147,8 +147,10 @@
                                 <uni-collapse-item v-for="(item,index) in liveclassD.course_datum" :key="index"
                                     :title="item.title" :show-animation="true">
                                     <view class='yyt-vipPay_H' v-for='(item,index) in item.children' :key="index">
-                                        <view class='yyt-btn_H'><a :href="item.content" target="_blank" :download="item.title"></a></view>
-                                        <view class='yyt-btn_H'><a :href="item.content" target="_blank">{{ item.title }}a</a> </view>
+                                        <view class='yyt-btn_H'><a :href="item.content" target="_blank"
+                                                :download="item.title"></a></view>
+                                        <view class='yyt-btn_H'><a :href="item.content"
+                                                target="_blank">{{ item.title }}a</a> </view>
                                         <!-- <view class='yyt-btn_H' @click="down(item.content)">{{ item.title }}</view> -->
                                         <!-- <img src="static/down.png" class="yyt-down" alt="" > -->
                                         <view class='yyt-icon_H'></view>
@@ -258,6 +260,25 @@
                 this.list_id = opt.list_id
             }
             this.load()
+        },
+        mounted() {
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[0].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].setAttribute("x-webkit-airplay", "allow")
+
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[1].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[1].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[1].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[1].setAttribute("x-webkit-airplay", "allow")
+
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[2].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[2].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[2].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[2].setAttribute("x-webkit-airplay", "allow")
         },
         methods: {
             load() {
@@ -410,6 +431,7 @@
                     }
                 }
             },
+
             // 监听创建播放器 给video加同层播放属性 兼容安卓
             onPlayerCanplay(player) {
                 document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");

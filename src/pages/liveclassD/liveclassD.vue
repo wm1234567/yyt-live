@@ -309,13 +309,6 @@
         },
         // 初始加载
         onLoad(opt) {
-            console.log(this.collect_status)
-            // uni.getSystemInfo({
-            //     success: res => {
-            //         console.log(res.windowHeight)
-            //         this._windowHeight = res.windowHeight - 252.94
-            //     }
-            // })
             // 获取body 可视区域高度
             var clientHeight = document.body.clientHeight
             console.log(clientHeight)

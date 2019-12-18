@@ -1,8 +1,19 @@
 <template>
 	<view class="yyt-container">
 		<view class="yyt-center">
-			<view class="yyt-center-bg"></view>
-			<img class="yyt-center-bg-bottom" src="static/bg_bottom.png" />
+			<!-- <view class="yyt-center-bg"></view>
+			<img class="yyt-center-bg-bottom" src="static/bg_bottom.png" /> -->
+			<view class="waveWrapper waveAnimation">
+				<view class="waveWrapperInner bgTop">
+					<view class="wave waveTop" style="background-image: url('static/wave-top.png');background-size:100%"></view>
+				</view>
+				<view class="waveWrapperInner bgMiddle">
+					<view class="wave waveMiddle" style="background-image: url('static/wave-mid.png');background-size:100%"></view>
+				</view>
+				<view class="waveWrapperInner bgBottom">
+					<view class="wave waveBottom" style="background-image: url('static/wave-bot.png');background-size:100%"></view>
+				</view>
+			</view>
 			<view class="yyt-center-user">
 				<view class="yyt-center-user-avatar">
 					<img :src="user.avatar" />
@@ -219,6 +230,7 @@
 		left: 0;
 		width: 100%;
 		height: 250rpx;
+		z-index: 20
 	}
 
 	.yyt-center-user-avatar {
@@ -263,6 +275,7 @@
 		left: 0;
 		width: 100%;
 		height: 150rpx;
+		z-index: 20
 	}
 
 	.yyt-center-nav-center {
@@ -377,5 +390,89 @@
 
 	.yyt-bottom-border {
 		border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
+	}
+
+	@keyframes move_wave {
+		0% {
+			transform: translateX(0) translateZ(0) scaleY(1)
+		}
+
+		50% {
+			transform: translateX(-25%) translateZ(0) scaleY(0.55)
+		}
+
+		100% {
+			transform: translateX(-50%) translateZ(0) scaleY(1)
+		}
+	}
+
+	.waveWrapper {
+		overflow: hidden;
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		margin: auto;
+	}
+
+	.waveWrapperInner {
+		position: absolute;
+		width: 100%;
+		overflow: hidden;
+		height: 200px;
+		top: 0;
+		background-image: linear-gradient(to top, #4986ff 20%, #4986ff 80%);
+	}
+
+	.bgTop {
+		z-index: 15;
+		opacity: 0.5;
+	}
+
+	.bgMiddle {
+		z-index: 10;
+		opacity: 0.75;
+	}
+
+	.bgBottom {
+		z-index: 5;
+	}
+
+	.wave {
+		position: absolute;
+		left: 0;
+		width: 200%;
+		height: 100%;
+		background-repeat: repeat no-repeat;
+		background-position: 0 bottom;
+		transform-origin: center bottom;
+	}
+
+	.waveTop {
+		background-size: 50% 100px;
+	}
+
+	.waveAnimation .waveTop {
+		animation: move-wave 3s;
+		-webkit-animation: move-wave 3s;
+		-webkit-animation-delay: 1s;
+		animation-delay: 1s;
+	}
+
+	.waveMiddle {
+		background-size: 50% 120px;
+	}
+
+	.waveAnimation .waveMiddle {
+		animation: move_wave 10s linear infinite;
+	}
+
+	.waveBottom {
+		background-size: 50% 100px;
+	}
+
+	.waveAnimation .waveBottom {
+		animation: move_wave 15s linear infinite;
 	}
 </style>

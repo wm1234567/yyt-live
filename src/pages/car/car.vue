@@ -47,7 +47,7 @@
                         @click="selectAll" />
                     <img src='static/cart.png' v-else type="circle" class="yyt-total-select" @click="selectAll" />
                     <text class='yyt-allselect'>已选({{ allcount }})</text>
-                    <text class="yyt-cart-toatl-price">合计：<text style='color:#d81e06'>{{ totalPrice }}</text></text>
+                    <text class="yyt-cart-toatl-price">合计：<text style='color:#d81e06'>￥{{ totalPrice }}</text></text>
                 </view>
                 <view class="yyt-footer-right" @click='goFillOrder'>提交订单</view>
             </view>

@@ -102,7 +102,13 @@
                 this.playerOptions.poster = this.liveclass.background;
             }
         },
-
+        mounted(){
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-type");
+                document.getElementsByTagName("video")[0].removeAttribute("x5-video-player-fullscreen");
+                document.getElementsByTagName("video")[0].setAttribute("webkit-playsinline", "");
+                document.getElementsByTagName("video")[0].setAttribute("x5-playsinline", "")
+                document.getElementsByTagName("video")[0].setAttribute("x-webkit-airplay", "allow")
+        },
         methods: {
             // 跳转直播课程
             liveclass_() {
