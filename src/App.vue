@@ -498,7 +498,9 @@
 		line-height: 70rpx;
 		color: #666
 	}
-
+	a{
+		 text-decoration:none;
+	}
 	/* .uni-video-video{
 		width: 100%;
 		height: auto !important;

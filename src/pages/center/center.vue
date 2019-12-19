@@ -5,13 +5,16 @@
 			<img class="yyt-center-bg-bottom" src="static/bg_bottom.png" /> -->
 			<view class="waveWrapper waveAnimation">
 				<view class="waveWrapperInner bgTop">
-					<view class="wave waveTop" style="background-image: url('static/wave-top.png');background-size:100%"></view>
+					<view class="wave waveTop"
+						style="background-image: url('static/wave-top.png');background-size:100%"></view>
 				</view>
 				<view class="waveWrapperInner bgMiddle">
-					<view class="wave waveMiddle" style="background-image: url('static/wave-mid.png');background-size:100%"></view>
+					<view class="wave waveMiddle"
+						style="background-image: url('static/wave-mid.png');background-size:100%"></view>
 				</view>
 				<view class="waveWrapperInner bgBottom">
-					<view class="wave waveBottom" style="background-image: url('static/wave-bot.png');background-size:100%"></view>
+					<view class="wave waveBottom"
+						style="background-image: url('static/wave-bot.png');background-size:100%"></view>
 				</view>
 			</view>
 			<view class="yyt-center-user">
@@ -72,12 +75,13 @@
 		</view>
 		<view class="space"></view>
 		<view class="yyt-center-r">
-			<!-- <view class='yyt-vipPay_H yyt-bottom-border'>
-				<a href="tel:15611686162">
-					<view class='yyt-btn_H'>在线客服</view>
+			<a :href="'tel:' + about.mobile" v-show="about.mobile">
+				<view class='yyt-vipPay_H yyt-bottom-border'>
+					<img src="static/5.png" alt="">
+					<view class='yyt-btn_H'>联系我们</view>
 					<view class='yyt-icon_H'></view>
-				</a>
-			</view> -->
+				</view>
+			</a>
 			<view class='yyt-vipPay_H yyt-bottom-border' @click="message">
 				<img src="static/6.png" alt="">
 				<view class='yyt-btn_H'>意见反馈</view>
@@ -106,7 +110,8 @@
 				title: 'Hello',
 				user: '',
 				info: {},
-				store_id: ''
+				store_id: '',
+				about: ''
 			}
 		},
 		onPullDownRefresh() {
@@ -141,6 +146,21 @@
 						uni.stopPullDownRefresh();
 						if (res.data.code == 1001) {
 							this.info = res.data.data;
+						}
+					},
+				});
+				requestUrl({
+					url: 'about',
+					header: {
+						"Content-Type": "application/x-www-form-urlencoded"
+					},
+					method: 'POST',
+					data: {
+						store_id: this.store_id
+					},
+					success: res => {
+						if (res.data.code == 1001) {
+							this.about = res.data.data;
 						}
 					},
 				});

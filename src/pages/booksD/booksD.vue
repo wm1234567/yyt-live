@@ -34,7 +34,15 @@
         </view>
         <view class="yyt-book-bottom">
             <view class="yyt-book-bottom-left">
-                <view class="bottom-block" @click="contact">
+                <a :href="'tel:' + mobile" v-if="mobile">
+                    <view class="bottom-block">
+                        <view class="bottom-block-icon">
+                            <img src="static/b-user.png" />
+                        </view>
+                        <view class="bottom-block-text">联系商家</view>
+                    </view>
+                </a>
+                <view class="bottom-block" v-else @click="contact">
                     <view class="bottom-block-icon">
                         <img src="static/b-user.png" />
                     </view>
@@ -99,6 +107,7 @@
                 flag: false,
                 store_id: '',
                 booksD: {},
+                mobile: ''
             }
         },
 
@@ -112,7 +121,7 @@
                 },
                 method: 'POST',
                 data: {
-                    store_id: STORE_ID,
+                    store_id: this.store_id,
                     shop_id: opt.shop_id,
                     account: openid
                 },
@@ -122,6 +131,22 @@
                         this.booksD = res.data.data
                     }
 
+                },
+            });
+            requestUrl({
+                url: 'about',
+                header: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                method: 'POST',
+                data: {
+                    store_id: this.store_id
+                },
+                success: res => {
+                    console.log('success联系商家mobile', res)
+                    if (res.data.code == 1001) {
+                        this.mobile = res.data.data.mobile;
+                    }
                 },
             });
         },
@@ -209,7 +234,7 @@
             },
             contact() {
                 uni.showToast({
-                    title: '暂未开放',
+                    title: '暂无电话',
                     mask: false,
                     duration: 2000,
                     icon: "none"
